@@ -1,1 +1,1 @@
-# codex-customer-registration-fnextjs-nestjs
+# codex-customer-registration-nextjs-nestjs
