@@ -1,0 +1,17 @@
+/* # App: Customer Registration
+ * # Package: ui.styles
+ * # File: src/app/globals.css
+ * # Version: 0.1.0
+ * # Turns: 1
+ * # Author: AI Agent
+ * # Date: 2025-09-18T19:33:35Z
+ * # Exports: Global Tailwind directives
+ * # Description: Initializes Tailwind CSS layers and base typography for the Next.js app.
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-slate-50 text-slate-900;
+}

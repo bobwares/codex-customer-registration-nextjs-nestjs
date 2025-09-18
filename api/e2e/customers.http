@@ -1,0 +1,47 @@
+# App: Customer Registration
+# Package: api.rest-tests
+# File: e2e/customers.http
+# Version: 0.1.0
+# Turns: 1
+# Author: AI Agent
+# Date: 2025-09-18T19:33:35Z
+# Exports: HTTP request collection for customer CRUD flows.
+# Description: Manual REST client requests for verifying customer endpoints during development.
+
+### Create customer
+POST http://localhost:3000/api/customers
+Content-Type: application/json
+
+{
+  "id": "dddddddd-dddd-dddd-dddd-dddddddddddd",
+  "firstName": "Donna",
+  "lastName": "Noble",
+  "emails": ["donna.noble@example.com"],
+  "privacySettings": {
+    "marketingEmailsEnabled": true,
+    "twoFactorEnabled": false
+  }
+}
+
+### Retrieve all customers
+GET http://localhost:3000/api/customers
+
+### Retrieve single customer
+GET http://localhost:3000/api/customers/dddddddd-dddd-dddd-dddd-dddddddddddd
+
+### Update customer
+PUT http://localhost:3000/api/customers/dddddddd-dddd-dddd-dddd-dddddddddddd
+Content-Type: application/json
+
+{
+  "firstName": "Donna",
+  "lastName": "Temple-Noble",
+  "emails": ["donna.temple@example.com"],
+  "privacySettings": {
+    "marketingEmailsEnabled": false,
+    "twoFactorEnabled": true
+  }
+}
+
+### Delete customer
+DELETE http://localhost:3000/api/customers/dddddddd-dddd-dddd-dddd-dddddddddddd

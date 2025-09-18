@@ -1,0 +1,17 @@
+# Session Context Values
+- sandbox_base_directory: /workspace
+- target_project: /workspace/codex-customer-registration-nextjs-nestjs
+- turn_id: 1
+- application_implementation_pattern: full-stack-app-nextjs-nestjs
+- pattern_path: /workspace/codex-agentic-ai-pipeline/agentic-pipeline/patterns/full-stack-app-nextjs-nestjs
+- timestamp_utc: 2025-09-18T20:21:56Z
+- executed_commands:
+  - cd ui && npm install
+  - cd api && npm run lint
+  - cd api && npm test -- --runInBand
+  - cd api && npm run test:e2e
+  - cd ui && npm run lint
+  - cd ui && npm test
+- outstanding_todos:
+  - Add PostgreSQL-backed integration coverage for relation persistence.
+  - Extend UI tests for failure-handling scenarios.

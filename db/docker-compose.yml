@@ -1,0 +1,29 @@
+# App: Customer Registration
+# Package: db
+# File: docker-compose.yml
+# Version: 0.1.0
+# Turns: 1
+# Author: AI Agent
+# Date: 2025-09-18T19:33:35Z
+# Description: Local PostgreSQL container for the customer registration domain schema.
+# Exports: PostgreSQL 16 container configuration with persistent volume mapping.
+
+version: '3.9'
+services:
+  postgres:
+    image: postgres:16
+    container_name: customer-registration-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-customer}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
