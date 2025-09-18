@@ -1,0 +1,44 @@
+### Create Customer
+POST http://localhost:3001/customers
+Content-Type: application/json
+
+{
+  "firstName": "Ada",
+  "lastName": "Lovelace",
+  "emails": ["ada@example.com"],
+  "phoneNumbers": [{ "type": "mobile", "number": "+14155550100" }],
+  "address": {
+    "line1": "123 Market Street",
+    "city": "San Francisco",
+    "state": "CA",
+    "postalCode": "94105",
+    "country": "US"
+  },
+  "privacySettings": {
+    "marketingEmailsEnabled": true,
+    "twoFactorEnabled": true
+  }
+}
+
+### List Customers
+GET http://localhost:3001/customers
+
+### Get Customer
+GET http://localhost:3001/customers/{{customerId}}
+
+### Update Customer
+PUT http://localhost:3001/customers/{{customerId}}
+Content-Type: application/json
+
+{
+  "firstName": "Ada",
+  "lastName": "Lovelace",
+  "emails": ["ada@example.com", "ada@analyticalengine.com"],
+  "privacySettings": {
+    "marketingEmailsEnabled": false,
+    "twoFactorEnabled": true
+  }
+}
+
+### Delete Customer
+DELETE http://localhost:3001/customers/{{customerId}}
