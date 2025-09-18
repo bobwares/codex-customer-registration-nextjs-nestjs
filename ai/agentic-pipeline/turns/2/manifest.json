@@ -1,0 +1,37 @@
+{
+  "$comment": "App: Customer Registration | Package: ai/agentic-pipeline/turns/2 | File: manifest.json | Version: 0.1.0 | Turns: [2] | Author: ChatGPT | Date: 2025-09-18T16:57:28Z | Description: Manifest capturing artifacts and file changes for turn 2.",
+  "turnId": 2,
+  "timestampUtc": "2025-09-18T16:57:28Z",
+  "task": "Metadata audit and agentic artifact refresh",
+  "artifacts": {
+    "changelog": "changelog.md",
+    "adr": "adr.md",
+    "manifest": "manifest.json",
+    "logs": [],
+    "reports": []
+  },
+  "changes": {
+    "added": [
+      "ai/agentic-pipeline/turns/2/changelog.md",
+      "ai/agentic-pipeline/turns/2/adr.md",
+      "ai/agentic-pipeline/turns/2/manifest.json"
+    ],
+    "modified": [
+      "changelog.md",
+      "version.md",
+      "reasoning.md",
+      "ai/agentic-pipeline/turns/index.csv"
+    ],
+    "deleted": []
+  },
+  "tests": [
+    {
+      "command": "npm test -- --runInBand",
+      "path": "api"
+    },
+    {
+      "command": "npm test",
+      "path": "ui"
+    }
+  ]
+}

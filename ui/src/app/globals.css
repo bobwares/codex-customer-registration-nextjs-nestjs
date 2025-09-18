@@ -1,0 +1,17 @@
+/*
+ * App: Customer Registration
+ * Package: ui/src/app
+ * File: globals.css
+ * Version: 0.1.1
+ * Turns: [1]
+ * Author: ChatGPT
+ * Date: 2025-09-18T16:44:28Z
+ * Description: Tailwind CSS directives and base styling for the application shell.
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}

@@ -1,0 +1,14 @@
+/*
+ * App: Customer Registration
+ * Package: api
+ * File: nest-cli.json
+ * Version: 0.1.0
+ * Turns: [1]
+ * Author: ChatGPT
+ * Date: 2025-09-18T16:44:28Z
+ * Description: Nest CLI configuration mapping source root and collection settings.
+ */
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src"
+}

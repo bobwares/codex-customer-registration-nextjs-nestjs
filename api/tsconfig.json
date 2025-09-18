@@ -1,0 +1,27 @@
+/*
+ * App: Customer Registration
+ * Package: api
+ * File: tsconfig.json
+ * Version: 0.1.0
+ * Turns: [1]
+ * Author: ChatGPT
+ * Date: 2025-09-18T16:44:28Z
+ * Description: TypeScript compiler configuration for the NestJS API project.
+ */
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "strict": true,
+    "skipLibCheck": true
+  }
+}

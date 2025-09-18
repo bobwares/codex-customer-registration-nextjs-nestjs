@@ -1,0 +1,17 @@
+/*
+ * App: Customer Registration
+ * Package: api
+ * File: tsconfig.build.json
+ * Version: 0.1.0
+ * Turns: [1]
+ * Author: ChatGPT
+ * Date: 2025-09-18T16:44:28Z
+ * Description: Build-specific TypeScript configuration for NestJS compilation output.
+ */
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist"
+  },
+  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
+}
