@@ -1,0 +1,31 @@
+{
+  "turnId": 1,
+  "timestampUtc": "2025-09-19T23:14:05Z",
+  "task": {
+    "name": "execute tasks",
+    "pattern": "full-stack-app-nextjs-nestjs",
+    "inputs": [
+      "ai/context/schemas/customer.schema.json"
+    ]
+  },
+  "changes": {
+    "added": [
+      "db/README.md",
+      "db/migrations/01_customer_domain.sql",
+      "db/entity-specs/customer_domain-entities.json",
+      "db/test/customer_domain_test_data.sql",
+      "ai/agentic-pipeline/turns/1/session_context_values.md",
+      "ai/agentic-pipeline/turns/1/changelog.md",
+      "ai/agentic-pipeline/turns/1/adr.md",
+      "ai/agentic-pipeline/turns/1/manifest.json",
+      "changelog.md"
+    ],
+    "modified": [],
+    "deleted": []
+  },
+  "artifacts": {
+    "changelog": "ai/agentic-pipeline/turns/1/changelog.md",
+    "adr": "ai/agentic-pipeline/turns/1/adr.md",
+    "manifest": "ai/agentic-pipeline/turns/1/manifest.json"
+  }
+}
