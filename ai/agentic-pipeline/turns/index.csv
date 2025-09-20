@@ -1,0 +1,2 @@
+turnId,timestampUtc,task,pattern,artifacts.changelog,artifacts.adr
+1,2025-09-19T23:14:05Z,execute tasks,full-stack-app-nextjs-nestjs,ai/agentic-pipeline/turns/1/changelog.md,ai/agentic-pipeline/turns/1/adr.md
