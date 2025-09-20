@@ -1,0 +1,59 @@
+{
+  "turnId": 2,
+  "timestampUtc": "2025-09-20T04:22:15Z",
+  "task": {
+    "name": "execute turn 2",
+    "items": [
+      "TASK 03 – Implement Domain CRUD Endpoints",
+      "TASK 04 – Persist Domain Data to PostgreSQL"
+    ]
+  },
+  "tests": [
+    { "command": "npm test -- --runInBand", "status": "passed" },
+    { "command": "npm run test:e2e", "status": "passed" },
+    { "command": "npm run lint", "status": "passed" }
+  ],
+  "changes": {
+    "added": [
+      "ai/agentic-pipeline/turns/2/adr.md",
+      "ai/agentic-pipeline/turns/2/changelog.md",
+      "ai/agentic-pipeline/turns/2/manifest.json",
+      "api/.eslintrc.js",
+      "api/.gitignore",
+      "api/.prettierrc",
+      "api/README.md",
+      "api/nest-cli.json",
+      "api/package-lock.json",
+      "api/package.json",
+      "api/rest-tests/customers.http",
+      "api/src/app.module.ts",
+      "api/src/config/configuration.ts",
+      "api/src/config/validation.ts",
+      "api/src/customers/customers.controller.spec.ts",
+      "api/src/customers/customers.controller.ts",
+      "api/src/customers/customers.module.ts",
+      "api/src/customers/customers.service.spec.ts",
+      "api/src/customers/customers.service.ts",
+      "api/src/customers/dto/create-customer.dto.spec.ts",
+      "api/src/customers/dto/create-customer.dto.ts",
+      "api/src/customers/dto/update-customer.dto.spec.ts",
+      "api/src/customers/dto/update-customer.dto.ts",
+      "api/src/customers/entities/customer.entity.ts",
+      "api/src/main.ts",
+      "api/src/migrations/1690000000000-CreateCustomersTable.ts",
+      "api/src/ormconfig.ts",
+      "api/src/database/database.config.ts",
+      "api/test/customers.e2e-spec.ts",
+      "api/test/jest-e2e.json",
+      "api/tsconfig.build.json",
+      "api/tsconfig.json",
+      "db/.env.example",
+      "db/docker-compose.yml",
+      "libs/domain/customer_domain.json",
+      "schemas/customer.schema.json"
+    ],
+    "modified": [
+      "README.md"
+    ]
+  }
+}

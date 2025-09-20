@@ -1,0 +1,13 @@
+# App: Customer Registration
+# Package: api
+# File: .gitignore
+# Version: 0.1.0
+# Turns: 2
+# Author: Codex Agent
+# Date: 2025-09-20T04:22:15Z
+# Exports: (ignore rules)
+# Description: Ignore build artifacts, dependencies, and environment files for the API project.
+/node_modules
+/dist
+/.env
+/coverage

@@ -1,0 +1,42 @@
+# App: Customer Registration
+# Package: api/rest-tests
+# File: customers.http
+# Version: 0.1.0
+# Turns: 2
+# Author: Codex Agent
+# Date: 2025-09-20T04:22:15Z
+# Exports: (http requests)
+# Description: HTTP file containing sample CRUD interactions with the
+#              customers API resource.
+
+### Create Customer
+POST http://localhost:3000/customers
+Content-Type: application/json
+
+{
+  "id": "11111111-1111-1111-1111-111111111111",
+  "firstName": "Ada",
+  "lastName": "Lovelace",
+  "emails": ["ada@example.com"],
+  "privacySettings": {
+    "marketingEmailsEnabled": true,
+    "twoFactorEnabled": true
+  }
+}
+
+### List Customers
+GET http://localhost:3000/customers
+
+### Fetch Customer
+GET http://localhost:3000/customers/11111111-1111-1111-1111-111111111111
+
+### Update Customer
+PUT http://localhost:3000/customers/11111111-1111-1111-1111-111111111111
+Content-Type: application/json
+
+{
+  "firstName": "Grace"
+}
+
+### Delete Customer
+DELETE http://localhost:3000/customers/11111111-1111-1111-1111-111111111111
