@@ -1,0 +1,14 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> backend@0.0.1 test
+> jest
+
+PASS test/app.spec.js
+  placeholder test suite
+    ✓ confirms test infrastructure is configured (3 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        0.416 s
+Ran all test suites.
