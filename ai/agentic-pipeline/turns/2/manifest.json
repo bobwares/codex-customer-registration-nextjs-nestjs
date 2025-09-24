@@ -1,0 +1,28 @@
+{
+  "turnId": 2,
+  "timestampUtc": "2025-09-24T03:07:00Z",
+  "task": {
+    "name": "Turn 2 database setup",
+    "items": [
+      "Create DB from Schema",
+      "Create test data set"
+    ]
+  },
+  "artifacts": {
+    "changelog": "changelog.md",
+    "adr": "adr.md",
+    "sessionContext": "session_context_values.md"
+  },
+  "changes": {
+    "added": [
+      "db/entity-specs/customer_domain-entities.json",
+      "db/migrations/01_customer_domain.sql",
+      "db/test/customer_domain_test_data.sql"
+    ],
+    "modified": [
+      "changelog.md",
+      "db/README.md"
+    ],
+    "deleted": []
+  }
+}

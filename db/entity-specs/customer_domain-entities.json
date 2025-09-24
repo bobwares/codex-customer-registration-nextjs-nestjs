@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codex-customer-registration-nextjs-nestjs/db/entity-specs/customer_domain-entities.json",
+  "title": "customer_domain Domain Entities",
+  "type": "object",
+  "x-db": { "schema": "customer_domain" },
+  "definitions": {
+    "PostalAddress": {
+      "type": "object",
+      "properties": {
+        "address_id": { "type": "integer" },
+        "line1": { "type": "string", "maxLength": 255 },
+        "line2": { "type": "string", "maxLength": 255 },
+        "city": { "type": "string", "maxLength": 100 },
+        "state": { "type": "string", "maxLength": 100 },
+        "postal_code": { "type": "string", "maxLength": 20 },
+        "country": { "type": "string", "minLength": 2, "maxLength": 2 },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "address_id",
+        "line1",
+        "city",
+        "state",
+        "country",
+        "created_at",
+        "updated_at"
+      ],
+      "x-db": {
+        "primaryKey": ["address_id"],
+        "indexes": [
+          ["country"],
+          ["postal_code"]
+        ]
+      }
+    },
+    "PrivacySettings": {
+      "type": "object",
+      "properties": {
+        "privacy_settings_id": { "type": "integer" },
+        "marketing_emails_enabled": { "type": "boolean" },
+        "two_factor_enabled": { "type": "boolean" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "privacy_settings_id",
+        "marketing_emails_enabled",
+        "two_factor_enabled",
+        "created_at",
+        "updated_at"
+      ],
+      "x-db": {
+        "primaryKey": ["privacy_settings_id"]
+      }
+    },
+    "Customer": {
+      "type": "object",
+      "properties": {
+        "customer_id": { "type": "string", "format": "uuid" },
+        "first_name": { "type": "string", "maxLength": 100 },
+        "middle_name": { "type": "string", "maxLength": 100 },
+        "last_name": { "type": "string", "maxLength": 100 },
+        "preferred_email": { "type": "string", "maxLength": 320 },
+        "address_id": { "type": "integer" },
+        "privacy_settings_id": { "type": "integer" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "customer_id",
+        "first_name",
+        "last_name",
+        "created_at",
+        "updated_at"
+      ],
+      "x-db": {
+        "primaryKey": ["customer_id"],
+        "foreignKey": [
+          { "column": "address_id", "ref": "PostalAddress.address_id" },
+          { "column": "privacy_settings_id", "ref": "PrivacySettings.privacy_settings_id" }
+        ],
+        "unique": [
+          ["preferred_email"]
+        ],
+        "indexes": [
+          ["last_name"],
+          ["address_id"],
+          ["privacy_settings_id"]
+        ]
+      }
+    },
+    "CustomerEmail": {
+      "type": "object",
+      "properties": {
+        "email_id": { "type": "integer" },
+        "customer_id": { "type": "string", "format": "uuid" },
+        "email": { "type": "string", "maxLength": 320 },
+        "is_primary": { "type": "boolean" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "email_id",
+        "customer_id",
+        "email",
+        "is_primary",
+        "created_at",
+        "updated_at"
+      ],
+      "x-db": {
+        "primaryKey": ["email_id"],
+        "foreignKey": [
+          { "column": "customer_id", "ref": "Customer.customer_id" }
+        ],
+        "unique": [
+          ["customer_id", "email"]
+        ],
+        "indexes": [
+          ["customer_id"],
+          { "columns": ["customer_id"], "predicate": "is_primary" }
+        ]
+      }
+    },
+    "CustomerPhoneNumber": {
+      "type": "object",
+      "properties": {
+        "phone_number_id": { "type": "integer" },
+        "customer_id": { "type": "string", "format": "uuid" },
+        "phone_type": { "type": "string", "maxLength": 10 },
+        "phone_number": { "type": "string", "maxLength": 20 },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "phone_number_id",
+        "customer_id",
+        "phone_type",
+        "phone_number",
+        "created_at",
+        "updated_at"
+      ],
+      "x-db": {
+        "primaryKey": ["phone_number_id"],
+        "foreignKey": [
+          { "column": "customer_id", "ref": "Customer.customer_id" }
+        ],
+        "unique": [
+          ["customer_id", "phone_number"]
+        ],
+        "indexes": [
+          ["phone_type"],
+          ["customer_id"]
+        ]
+      }
+    }
+  }
+}
