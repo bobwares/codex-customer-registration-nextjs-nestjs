@@ -1,0 +1,21 @@
+# App: Customer Registration
+# Package: api/e2e
+# File: health.http
+# Version: 0.1.0
+# Turns: 1
+# Author: Codex Agent
+# Date: 2025-09-24T00:32:42Z
+# Exports: (HTTP requests)
+# Description: Manual REST client checks for health, liveness, and readiness endpoints.
+
+### Health metadata endpoint
+GET http://localhost:3000/health
+Accept: application/json
+
+### Liveness probe
+GET http://localhost:3000/health/live
+Accept: application/json
+
+### Readiness probe
+GET http://localhost:3000/health/ready
+Accept: application/json
