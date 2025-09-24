@@ -1,0 +1,39 @@
+{
+  "turnId": 3,
+  "timestampUtc": "2025-09-24T22:04:40Z",
+  "task": {
+    "name": "Turn 3",
+    "prompt": "Execute turns 1 - 4",
+    "tasks": [
+      "TASK 06 - Create TypeORM Configuration",
+      "TASK 07 - Create Domain Entities"
+    ]
+  },
+  "artifacts": {
+    "changelog": "changelog.md",
+    "adr": "adr.md",
+    "sessionContext": "session_context_values.md"
+  },
+  "changes": {
+    "added": [
+      "ai/agentic-pipeline/turns/3/adr.md",
+      "ai/agentic-pipeline/turns/3/changelog.md",
+      "ai/agentic-pipeline/turns/3/manifest.json",
+      "ai/agentic-pipeline/turns/3/session_context_values.md",
+      "ai/context/.env",
+      "api/README.md",
+      "api/src/customer/entities/customer.entity.ts",
+      "api/src/customer/entities/customer_email.entity.ts",
+      "api/src/customer/entities/customer_phone_number.entity.ts",
+      "api/src/customer/entities/postal_address.entity.ts",
+      "api/src/customer/entities/privacy_settings.entity.ts",
+      "api/src/database/data-source.ts",
+      "api/src/database/validate-connection.ts"
+    ],
+    "modified": [
+      "ai/agentic-pipeline/turns/index.csv",
+      "api/package.json",
+      "api/src/app.module.ts"
+    ]
+  }
+}

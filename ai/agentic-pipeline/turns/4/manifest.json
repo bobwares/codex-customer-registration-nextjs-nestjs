@@ -1,0 +1,44 @@
+{
+  "turnId": 4,
+  "timestampUtc": "2025-09-24T22:07:12Z",
+  "task": {
+    "name": "Turn 4",
+    "prompt": "Execute turns 1 - 4",
+    "tasks": [
+      "TASK 08 – Implement Domain CRUD Endpoints"
+    ]
+  },
+  "artifacts": {
+    "changelog": "changelog.md",
+    "adr": "adr.md",
+    "sessionContext": "session_context_values.md"
+  },
+  "changes": {
+    "added": [
+      "ai/agentic-pipeline/turns/4/adr.md",
+      "ai/agentic-pipeline/turns/4/changelog.md",
+      "ai/agentic-pipeline/turns/4/manifest.json",
+      "ai/agentic-pipeline/turns/4/session_context_values.md",
+      "api/e2e/customers.http",
+      "api/src/customer/__tests__/customer.controller.spec.ts",
+      "api/src/customer/__tests__/customer.service.spec.ts",
+      "api/src/customer/customer.controller.ts",
+      "api/src/customer/customer.module.ts",
+      "api/src/customer/customer.service.ts",
+      "api/src/customer/dtos/__tests__/create-customer.dto.test.ts",
+      "api/src/customer/dtos/__tests__/update-customer.dto.test.ts",
+      "api/src/customer/dtos/address.dto.ts",
+      "api/src/customer/dtos/create-customer.dto.ts",
+      "api/src/customer/dtos/phone-number.dto.ts",
+      "api/src/customer/dtos/privacy-settings.dto.ts",
+      "api/src/customer/dtos/update-customer.dto.ts",
+      "api/test/customers.e2e-spec.ts"
+    ],
+    "modified": [
+      "api/README.md",
+      "api/src/app.module.ts",
+      "changelog.md",
+      "ai/agentic-pipeline/turns/index.csv"
+    ]
+  }
+}

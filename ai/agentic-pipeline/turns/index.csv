@@ -1,0 +1,5 @@
+turnId,timestampUtc,task
+1,2025-09-24T22:00:25Z,Turn 1 - Initialize scaffold and health checks
+2,2025-09-24T22:02:51Z,Turn 2 - Database schema and seed data
+3,2025-09-24T22:04:40Z,Turn 3 - ORM configuration and entities
+4,2025-09-24T22:07:12Z,Turn 4 - Customer CRUD API

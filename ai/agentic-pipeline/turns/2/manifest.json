@@ -1,0 +1,31 @@
+{
+  "turnId": 2,
+  "timestampUtc": "2025-09-24T22:02:51Z",
+  "task": {
+    "name": "Turn 2",
+    "prompt": "Execute turns 1 - 4",
+    "tasks": [
+      "TASK 04 - Create DB from Schema",
+      "TASK 05 - Create set of test data"
+    ]
+  },
+  "artifacts": {
+    "changelog": "changelog.md",
+    "adr": "adr.md",
+    "sessionContext": "session_context_values.md"
+  },
+  "changes": {
+    "added": [
+      "ai/agentic-pipeline/turns/2/adr.md",
+      "ai/agentic-pipeline/turns/2/changelog.md",
+      "ai/agentic-pipeline/turns/2/manifest.json",
+      "ai/agentic-pipeline/turns/2/session_context_values.md",
+      "ai/context/schemas/customer_domain-entities.json",
+      "db/migrations/01_customer_domain.sql",
+      "db/test/customer_domain_test_data.sql"
+    ],
+    "modified": [
+      "db/README.md"
+    ]
+  }
+}
