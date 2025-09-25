@@ -1,0 +1,21 @@
+# App: Customer Registration
+# Package: api/rest-tests
+# File: health.http
+# Version: 0.1.0
+# Turns: 5
+# Author: Codex Agent
+# Date: 2025-09-25T20:43:14Z
+# Exports: (none)
+# Description: REST client requests to verify health and readiness endpoints for the Customer Registration API.
+
+### Health metadata endpoint
+GET http://localhost:3000/health
+Accept: application/json
+
+### Liveness probe
+GET http://localhost:3000/health/live
+Accept: application/json
+
+### Readiness probe
+GET http://localhost:3000/health/ready
+Accept: application/json
