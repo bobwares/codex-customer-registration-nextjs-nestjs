@@ -1,0 +1,46 @@
+# App: Customer Registration
+# Package: api/e2e
+# File: customers.http
+# Version: 0.1.0
+# Turns: 4
+# Author: Codex Agent
+# Date: 2025-09-25T20:04:09Z
+# Exports: (none)
+# Description: HTTP smoke tests for the customer CRUD API and OpenAPI document endpoints.
+
+### Create customer
+POST http://localhost:3000/customers
+Content-Type: application/json
+
+{
+  "firstName": "Jane",
+  "middleName": "Q.",
+  "lastName": "Doe",
+  "emails": ["jane.doe@example.com", "jane.work@example.com"],
+  "phoneNumbers": [
+    {
+      "type": "mobile",
+      "number": "+15551234567"
+    }
+  ],
+  "address": {
+    "line1": "123 Market Street",
+    "city": "San Francisco",
+    "state": "CA",
+    "postalCode": "94103",
+    "country": "US"
+  },
+  "privacySettings": {
+    "marketingEmailsEnabled": true,
+    "twoFactorEnabled": false
+  }
+}
+
+### Retrieve OpenAPI document
+GET http://localhost:3000/api/openapi.json
+
+### List customers
+GET http://localhost:3000/customers
+
+### Delete customer (replace :id with actual identifier)
+DELETE http://localhost:3000/customers/:id

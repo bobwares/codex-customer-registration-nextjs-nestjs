@@ -2,10 +2,10 @@
  * App: Customer Registration
  * Package: api/src/customer/entities
  * File: customer_phone_number.entity.ts
- * Version: 0.1.1
- * Turns: 3
+ * Version: 0.1.2
+ * Turns: 3, 4
  * Author: Codex Agent
- * Date: 2025-09-25T19:36:06Z
+ * Date: 2025-09-25T20:04:09Z
  * Exports: CustomerPhoneNumberEntity
  * Description: Maps customer phone numbers with uniqueness per customer/type combination.
  */
@@ -26,6 +26,8 @@ const entityOptions: EntityOptions = {
   name: 'customer_phone_numbers',
   ...(schemaName ? { schema: schemaName } : {}),
 };
+
+const timestampColumnType = process.env.NODE_ENV === 'test' ? 'datetime' : 'timestamptz';
 
 @Entity(entityOptions)
 @Index('ix_customer_phone_numbers_customer_id', ['customerId'])
@@ -48,7 +50,7 @@ export class CustomerPhoneNumberEntity {
   @Column({ name: 'extension', type: 'varchar', length: 10, nullable: true })
   public extension?: string | null;
 
-  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
+  @CreateDateColumn({ name: 'created_at', type: timestampColumnType })
   public createdAt!: Date;
 
   @ManyToOne(() => CustomerEntity, (customer) => customer.phoneNumbers, {

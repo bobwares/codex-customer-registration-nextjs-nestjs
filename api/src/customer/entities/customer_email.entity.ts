@@ -2,10 +2,10 @@
  * App: Customer Registration
  * Package: api/src/customer/entities
  * File: customer_email.entity.ts
- * Version: 0.1.1
- * Turns: 3
+ * Version: 0.1.2
+ * Turns: 3, 4
  * Author: Codex Agent
- * Date: 2025-09-25T19:36:06Z
+ * Date: 2025-09-25T20:04:09Z
  * Exports: CustomerEmailEntity
  * Description: Maps customer email addresses with uniqueness per customer and optional primary flag.
  */
@@ -27,6 +27,8 @@ const entityOptions: EntityOptions = {
   ...(schemaName ? { schema: schemaName } : {}),
 };
 
+const timestampColumnType = process.env.NODE_ENV === 'test' ? 'datetime' : 'timestamptz';
+
 @Entity(entityOptions)
 @Index('ix_customer_emails_customer_id', ['customerId'])
 @Index('ux_customer_emails_customer_id_email', ['customerId', 'email'], { unique: true })
@@ -43,7 +45,7 @@ export class CustomerEmailEntity {
   @Column({ name: 'is_primary', type: 'boolean' })
   public isPrimary!: boolean;
 
-  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
+  @CreateDateColumn({ name: 'created_at', type: timestampColumnType })
   public createdAt!: Date;
 
   @ManyToOne(() => CustomerEntity, (customer) => customer.emails, {

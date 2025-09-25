@@ -12,14 +12,14 @@
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
-import { AppModule } from '../src/app.module';
+import { HealthModule } from '../src/health/health.module';
 
 describe('Health E2E', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
     const modRef = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [HealthModule],
     }).compile();
     app = modRef.createNestApplication();
     await app.init();

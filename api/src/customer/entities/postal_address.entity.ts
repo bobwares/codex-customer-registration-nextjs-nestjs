@@ -2,10 +2,10 @@
  * App: Customer Registration
  * Package: api/src/customer/entities
  * File: postal_address.entity.ts
- * Version: 0.1.1
- * Turns: 3
+ * Version: 0.1.2
+ * Turns: 3, 4
  * Author: Codex Agent
- * Date: 2025-09-25T19:36:06Z
+ * Date: 2025-09-25T20:04:09Z
  * Exports: PostalAddressEntity
  * Description: Defines the postal_addresses table mapping for storing structured mailing addresses.
  */
@@ -25,6 +25,9 @@ const entityOptions: EntityOptions = {
   name: 'postal_addresses',
   ...(schemaName ? { schema: schemaName } : {}),
 };
+
+const timestampColumnType = process.env.NODE_ENV === 'test' ? 'datetime' : 'timestamptz';
+const countryColumnType = process.env.NODE_ENV === 'test' ? 'varchar' : 'char';
 
 @Entity(entityOptions)
 export class PostalAddressEntity {
@@ -46,13 +49,13 @@ export class PostalAddressEntity {
   @Column({ name: 'postal_code', type: 'varchar', length: 20 })
   public postalCode!: string;
 
-  @Column({ name: 'country', type: 'char', length: 2 })
+  @Column({ name: 'country', type: countryColumnType, length: 2 })
   public country!: string;
 
-  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
+  @CreateDateColumn({ name: 'created_at', type: timestampColumnType })
   public createdAt!: Date;
 
-  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
+  @UpdateDateColumn({ name: 'updated_at', type: timestampColumnType })
   public updatedAt!: Date;
 
   @OneToMany(() => CustomerEntity, (customer) => customer.address)
