@@ -1,0 +1,43 @@
+# App: Customer Registration
+# Package: infra
+# File: docker-compose.yml
+# Version: 0.1.0
+# Turns: 5
+# Author: Codex Agent
+# Date: 2025-09-25T20:43:14Z
+# Exports: services.db, services.api
+# Description: Defines local Docker Compose services for PostgreSQL and the NestJS API with health checks and dependencies.
+#
+services:
+  db:
+    image: postgres:16
+    container_name: api_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ../api
+      dockerfile: Dockerfile
+    env_file:
+      - ../api/.env.local
+    ports:
+      - "${API_PORT}:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db_data:

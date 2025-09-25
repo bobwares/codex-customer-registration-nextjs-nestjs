@@ -14,3 +14,8 @@
 - Configured a shared TypeORM data source, CLI scripts, and validation utilities that read credentials from `ai/context/.env`.
 - Implemented customer domain entities, view projections, and a transactional NestJS service bundled in a new `CustomerModule`.
 - Captured the initial TypeORM migration and README guidance to manage migrations and runtime database checks.
+
+## 0.4.0 – 2025-09-25T20:43:14Z (Turn 5)
+- Added Docker Compose stack and shared environment configuration under `infra/` to run Postgres and the NestJS API together.
+- Introduced a project-level `Makefile` covering Compose lifecycle, TypeORM migrations, and application commands.
+- Published an end-to-end API README with configuration guidance, troubleshooting, and workflow documentation, and reorganized REST client `.http` files under `api/rest-tests/` with updated metadata headers.

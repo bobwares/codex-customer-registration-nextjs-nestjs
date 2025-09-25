@@ -1,10 +1,10 @@
 # App: Customer Registration
-# Package: api/e2e
+# Package: api/rest-tests
 # File: customers.http
-# Version: 0.1.0
-# Turns: 4
+# Version: 0.2.0
+# Turns: 4, 5
 # Author: Codex Agent
-# Date: 2025-09-25T20:04:09Z
+# Date: 2025-09-25T20:43:14Z
 # Exports: (none)
 # Description: HTTP smoke tests for the customer CRUD API and OpenAPI document endpoints.
 
