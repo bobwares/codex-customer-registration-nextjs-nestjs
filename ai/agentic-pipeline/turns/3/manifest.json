@@ -1,0 +1,49 @@
+{
+  "turnId": 3,
+  "timestampUtc": "2025-09-25T19:49:54Z",
+  "task": {
+    "name": "execute turn 3",
+    "tasks": [
+      "TASK 06 - Create TypeORM Configuration",
+      "TASK 07 — Create Domain Entities"
+    ]
+  },
+  "changes": {
+    "added": [
+      "ai/agentic-pipeline/turns/3/adr.md",
+      "ai/agentic-pipeline/turns/3/changelog.md",
+      "ai/agentic-pipeline/turns/3/manifest.json",
+      "ai/agentic-pipeline/turns/3/session_context_values.md",
+      "api/README.md",
+      "api/src/customer/customer.module.ts",
+      "api/src/customer/entities/customer.entity.ts",
+      "api/src/customer/entities/customer_email.entity.ts",
+      "api/src/customer/entities/customer_phone_number.entity.ts",
+      "api/src/customer/entities/customer_profile_view.entity.ts",
+      "api/src/customer/entities/postal_address.entity.ts",
+      "api/src/customer/entities/privacy_settings.entity.ts",
+      "api/src/customer/services/customer.service.ts",
+      "api/src/database/data-source.ts",
+      "api/src/database/validate-connection.ts",
+      "api/src/migrations/20250925193600-CreateCustomerDomainSchema.ts"
+    ],
+    "modified": [
+      "ai/agentic-pipeline/turns/index.csv",
+      "api/.gitignore",
+      "api/package-lock.json",
+      "api/package.json",
+      "api/src/app.module.ts",
+      "changelog.md"
+    ]
+  },
+  "tests": [
+    {
+      "command": "npm run build",
+      "path": "api"
+    },
+    {
+      "command": "npm run lint",
+      "path": "api"
+    }
+  ]
+}
