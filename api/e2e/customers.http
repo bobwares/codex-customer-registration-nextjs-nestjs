@@ -1,0 +1,57 @@
+### Create customer
+POST http://localhost:3000/customers
+Content-Type: application/json
+
+{
+  "firstName": "Riley",
+  "lastName": "Adams",
+  "emails": ["riley.adams@example.com"],
+  "phoneNumbers": [
+    { "type": "mobile", "number": "+15555550901" }
+  ],
+  "address": {
+    "line1": "101 Main St",
+    "city": "Austin",
+    "state": "TX",
+    "postalCode": "73301",
+    "country": "US"
+  },
+  "privacySettings": {
+    "marketingEmailsEnabled": true,
+    "twoFactorEnabled": false
+  }
+}
+
+### List customers
+GET http://localhost:3000/customers
+Accept: application/json
+
+### Fetch customer by id
+GET http://localhost:3000/customers/{{customerId}}
+Accept: application/json
+
+### Update customer
+PUT http://localhost:3000/customers/{{customerId}}
+Content-Type: application/json
+
+{
+  "firstName": "Riley",
+  "emails": [
+    "riley.adams@example.com",
+    "riley@example.org"
+  ],
+  "phoneNumbers": [
+    { "type": "home", "number": "+15555550902" }
+  ],
+  "privacySettings": {
+    "marketingEmailsEnabled": false,
+    "twoFactorEnabled": true
+  }
+}
+
+### Delete customer
+DELETE http://localhost:3000/customers/{{customerId}}
+
+### Download OpenAPI document
+GET http://localhost:3000/api/openapi.json
+Accept: application/json

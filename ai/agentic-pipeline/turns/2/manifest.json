@@ -1,0 +1,17 @@
+{
+  "turnId": 2,
+  "timestampUtc": "2025-09-25T06:25:09Z",
+  "tasks": [
+    "TASK 04 - Create DB from Schema",
+    "TASK 05 - Create set of test data"
+  ],
+  "changes": {
+    "added": [
+      "db/docker-compose.yml",
+      "db/README.md",
+      "db/migrations/01_customer_domain.sql",
+      "db/test/customer_domain_test_data.sql",
+      "ai/context/schemas/customer_domain-entities.json"
+    ]
+  }
+}

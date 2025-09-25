@@ -1,0 +1,5 @@
+turnId,timestampUtc,tasks
+1,2025-09-25T06:25:09Z,"TASK 01 - Initialize Project | TASK 02 - Add Health Check Endpoint Module | TASK 03 - Add Health Check E2E .http Test"
+2,2025-09-25T06:25:09Z,"TASK 04 - Create DB from Schema | TASK 05 - Create set of test data"
+3,2025-09-25T06:25:09Z,"TASK 06 - Create TypeORM Configuration | TASK 07 - Create Domain Entities"
+4,2025-09-25T06:25:09Z,"TASK 08 – Implement Domain CRUD Endpoints"

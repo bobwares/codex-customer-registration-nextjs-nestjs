@@ -1,0 +1,32 @@
+{
+  "turnId": 4,
+  "timestampUtc": "2025-09-25T06:25:09Z",
+  "tasks": [
+    "TASK 08 – Implement Domain CRUD Endpoints"
+  ],
+  "changes": {
+    "added": [
+      "api/src/customer/customer.controller.ts",
+      "api/src/customer/customer.service.ts",
+      "api/src/customer/dtos/create-customer.dto.ts",
+      "api/src/customer/dtos/update-customer.dto.ts",
+      "api/src/customer/dtos/customer-response.dto.ts",
+      "api/src/customer/dtos/__tests__/create-customer.dto.spec.ts",
+      "api/src/customer/__tests__/customer.controller.spec.ts",
+      "api/src/customer/__tests__/customer.service.spec.ts",
+      "api/test/customers.e2e-spec.ts",
+      "api/e2e/customers.http",
+      "api/src/scripts/emit-openapi.ts",
+      "api/src/common/dtos/problem-details.dto.ts"
+    ],
+    "modified": [
+      "api/src/main.ts",
+      "api/src/app.module.ts",
+      "api/package.json",
+      "api/README.md",
+      "README.md",
+      "api/src/health/__tests__/health.controller.spec.ts",
+      "api/test/health.e2e-spec.ts"
+    ]
+  }
+}
