@@ -2,10 +2,10 @@
  * App: Customer Registration
  * Package: api/src/customer/services
  * File: customer.service.ts
- * Version: 0.1.1
- * Turns: 3
+ * Version: 0.2.0
+ * Turns: 3, 4
  * Author: Codex Agent
- * Date: 2025-09-25T19:36:06Z
+ * Date: 2025-09-25T20:04:09Z
  * Exports: CustomerService, CreateCustomerInput, UpdateCustomerInput
  * Description: Provides repository-backed persistence operations for the customer domain aggregates and projections.
  */
@@ -59,9 +59,16 @@ export type CreateCustomerInput = {
   phoneNumbers?: CreateCustomerPhoneInput[];
 };
 
-export type UpdateCustomerInput = Partial<Omit<CreateCustomerInput, 'customerId'>> & {
+export type UpdateCustomerInput = {
+  name?: string;
+  firstName?: string;
+  middleName?: string | null;
+  lastName?: string;
+  email?: string;
   address?: CreatePostalAddressInput | null;
+  addressId?: number;
   privacySettings?: CreatePrivacySettingsInput | null;
+  privacySettingsId?: number;
   emails?: CreateCustomerEmailInput[] | null;
   phoneNumbers?: CreateCustomerPhoneInput[] | null;
 };
@@ -176,6 +183,28 @@ export class CustomerService {
         emails: true,
         phoneNumbers: true,
       },
+    });
+  }
+
+  public async listCustomers(customerIds?: string[]): Promise<CustomerEntity[]> {
+    const relations = {
+      address: true,
+      privacySettings: true,
+      emails: true,
+      phoneNumbers: true,
+    } as const;
+
+    if (customerIds?.length) {
+      return this.customerRepository.find({
+        where: { customerId: In(customerIds) },
+        relations,
+        order: { createdAt: 'ASC' },
+      });
+    }
+
+    return this.customerRepository.find({
+      relations,
+      order: { createdAt: 'ASC' },
     });
   }
 

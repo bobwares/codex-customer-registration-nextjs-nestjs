@@ -2,10 +2,10 @@
  * App: Customer Registration
  * Package: api/src/customer/entities
  * File: customer.entity.ts
- * Version: 0.1.1
- * Turns: 3
+ * Version: 0.1.2
+ * Turns: 3, 4
  * Author: Codex Agent
- * Date: 2025-09-25T19:36:06Z
+ * Date: 2025-09-25T20:04:09Z
  * Exports: CustomerEntity
  * Description: Represents customer records and relations to addresses, privacy settings, emails, and phone numbers.
  */
@@ -32,6 +32,8 @@ const entityOptions: EntityOptions = {
   name: 'customers',
   ...(schemaName ? { schema: schemaName } : {}),
 };
+
+const timestampColumnType = process.env.NODE_ENV === 'test' ? 'datetime' : 'timestamptz';
 
 @Entity(entityOptions)
 @Unique('ux_customers_email', ['email'])
@@ -62,10 +64,10 @@ export class CustomerEntity {
   @Column({ name: 'privacy_settings_id', type: 'integer', nullable: true })
   public privacySettingsId?: number | null;
 
-  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
+  @CreateDateColumn({ name: 'created_at', type: timestampColumnType })
   public createdAt!: Date;
 
-  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
+  @UpdateDateColumn({ name: 'updated_at', type: timestampColumnType })
   public updatedAt!: Date;
 
   @ManyToOne(() => PostalAddressEntity, (address) => address.customers, {

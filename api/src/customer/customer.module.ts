@@ -2,12 +2,12 @@
  * App: Customer Registration
  * Package: api/src/customer
  * File: customer.module.ts
- * Version: 0.1.0
- * Turns: 3
+ * Version: 0.2.0
+ * Turns: 3, 4
  * Author: Codex Agent
- * Date: 2025-09-25T19:36:06Z
+ * Date: 2025-09-25T20:04:09Z
  * Exports: CustomerModule
- * Description: Registers customer domain repositories and services for dependency injection.
+ * Description: Registers customer domain repositories, controllers, and services for dependency injection.
  */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -18,6 +18,7 @@ import { CustomerProfileView } from './entities/customer_profile_view.entity';
 import { PostalAddressEntity } from './entities/postal_address.entity';
 import { PrivacySettingsEntity } from './entities/privacy_settings.entity';
 import { CustomerService } from './services/customer.service';
+import { CustomerController } from './controllers/customer.controller';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { CustomerService } from './services/customer.service';
       CustomerProfileView,
     ]),
   ],
+  controllers: [CustomerController],
   providers: [CustomerService],
   exports: [CustomerService],
 })
