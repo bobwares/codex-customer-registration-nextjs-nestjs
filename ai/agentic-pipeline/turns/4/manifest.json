@@ -1,0 +1,60 @@
+{
+  "turnId": 4,
+  "timestampUtc": "2025-09-26T05:22:41Z",
+  "task": {
+    "name": "Turn 4 - Customer CRUD, logging, validation, and tests",
+    "inputs": [
+      "pattern task 08",
+      "pattern task 09",
+      "pattern task 10",
+      "pattern task 11"
+    ]
+  },
+  "changes": {
+    "added": [
+      "AGENTS.md",
+      "ai/agentic-pipeline/turns/4/adr.md",
+      "ai/agentic-pipeline/turns/4/changelog.md",
+      "ai/agentic-pipeline/turns/4/manifest.json",
+      "ai/agentic-pipeline/turns/4/session_context_values.md",
+      "api/README.md",
+      "api/e2e/customers.http",
+      "api/openapi/openapi.json",
+      "api/package-lock.json",
+      "api/scripts/emit-openapi.ts",
+      "api/src/common/dtos/problem-details.dto.ts",
+      "api/src/common/filters/http-exception.filter.ts",
+      "api/src/common/logging/json-logger.service.spec.ts",
+      "api/src/common/logging/json-logger.service.ts",
+      "api/src/common/logging/logging.interceptor.ts",
+      "api/src/common/logging/request-context.ts",
+      "api/src/common/logging/request-id.middleware.ts",
+      "api/src/common/swagger/swagger.config.ts",
+      "api/src/customer/customer.controller.ts",
+      "api/src/customer/customer.module.ts",
+      "api/src/customer/customer.service.ts",
+      "api/src/customer/dtos/create-customer.dto.ts",
+      "api/src/customer/dtos/customer-response.dto.ts",
+      "api/src/customer/dtos/phone-number.dto.ts",
+      "api/src/customer/dtos/postal-address.dto.ts",
+      "api/src/customer/dtos/privacy-settings.dto.ts",
+      "api/src/customer/dtos/update-customer.dto.ts",
+      "api/src/customer/entities/customer-email.entity.ts",
+      "api/src/customer/entities/customer-phone-number.entity.ts",
+      "api/src/customer/entities/customer.entity.ts",
+      "api/src/customer/entities/postal-address.entity.ts",
+      "api/src/customer/entities/privacy-settings.entity.ts",
+      "api/src/customer/tests/customer.service.spec.ts",
+      "api/test/customers.e2e-spec.ts"
+    ],
+    "modified": [
+      "README.md",
+      "api/package.json",
+      "api/src/app.module.ts",
+      "api/src/main.ts",
+      "api/test/health.e2e-spec.ts",
+      "api/tsconfig.json"
+    ],
+    "deleted": []
+  }
+}
