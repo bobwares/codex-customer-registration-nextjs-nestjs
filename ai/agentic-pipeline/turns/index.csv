@@ -1,0 +1,4 @@
+turnId,timestampUtc,task,branch,tag,headAfter,testsPassed,testsFailed,coverageDeltaPct
+1,2025-09-26T02:55:41Z,Initialize API health checks,work,,,
+2,2025-09-26T02:55:41Z,Create database schema,work,,,
+3,2025-09-26T02:55:41Z,Seed customer test data,work,,,

@@ -1,0 +1,19 @@
+{
+  "turnId": 2,
+  "timestampUtc": "2025-09-26T02:55:41Z",
+  "task": {
+    "name": "Turn 2 - Database schema definition",
+    "inputs": [
+      "pattern tasks 04-05 tools 01-02"
+    ]
+  },
+  "changes": {
+    "added": [
+      "db/migrations/01_customer_domain.sql",
+      "ai/context/schemas/customer_domain-entities.json",
+      "db/README.md"
+    ],
+    "modified": [],
+    "deleted": []
+  }
+}

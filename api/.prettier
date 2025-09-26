@@ -1,0 +1,10 @@
+# App: Customer Registration
+# Package: api
+# File: .prettier
+# Version: 0.1.0
+# Turns: 1
+# Author: Codex Agent
+# Date: 2025-09-26T02:55:41Z
+# Exports: Prettier configuration reference note
+# Description: Delegates Prettier configuration to prettier.config.js for richer metadata header support.
+# Refer to prettier.config.js for the actual configuration exported as a JavaScript module.
