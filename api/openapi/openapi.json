@@ -1,0 +1,601 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "HealthController_health",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Health"
+        ]
+      }
+    },
+    "/health/live": {
+      "get": {
+        "operationId": "HealthController_liveness",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Health"
+        ]
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "operationId": "HealthController_readiness",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Health"
+        ]
+      }
+    },
+    "/customers": {
+      "get": {
+        "operationId": "CustomerController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CustomerResponseDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "List all customers",
+        "tags": [
+          "Customer"
+        ]
+      },
+      "post": {
+        "operationId": "CustomerController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetailsDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create a new customer",
+        "tags": [
+          "Customer"
+        ]
+      }
+    },
+    "/customers/{id}": {
+      "get": {
+        "operationId": "CustomerController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Customer identifier (UUID)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Customer not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetailsDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Fetch a customer by identifier",
+        "tags": [
+          "Customer"
+        ]
+      },
+      "put": {
+        "operationId": "CustomerController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Customer identifier (UUID)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCustomerDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetailsDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Customer not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetailsDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update an existing customer",
+        "tags": [
+          "Customer"
+        ]
+      },
+      "delete": {
+        "operationId": "CustomerController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Customer identifier (UUID)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Customer deleted successfully"
+          },
+          "404": {
+            "description": "Customer not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetailsDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete a customer",
+        "tags": [
+          "Customer"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Customer Registration API",
+    "description": "Customer onboarding service CRUD endpoints and documentation.",
+    "version": "0.0.1",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "Customer",
+      "description": ""
+    }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "ProblemDetailsDto": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "number",
+            "description": "HTTP status code for the error response",
+            "example": 400
+          },
+          "error": {
+            "type": "string",
+            "description": "Short classification of the error",
+            "example": "Bad Request"
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable explanation of the error",
+            "example": "Validation failed for the request body."
+          },
+          "path": {
+            "type": "string",
+            "description": "Request path that triggered the error",
+            "example": "/customers"
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "Timestamp when the error was generated",
+            "example": "2025-09-26T00:00:00.000Z"
+          },
+          "requestId": {
+            "type": "string",
+            "description": "Correlation identifier attached to the request",
+            "example": "3f4482c9-74ff-4d36-96bc-9e40776e6d62"
+          }
+        },
+        "required": [
+          "statusCode",
+          "error",
+          "message",
+          "path",
+          "timestamp"
+        ]
+      },
+      "PhoneNumberDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Classification for the phone number",
+            "example": "mobile",
+            "enum": [
+              "mobile",
+              "home",
+              "work",
+              "other"
+            ]
+          },
+          "number": {
+            "type": "string",
+            "description": "Phone number expressed in E.164 format",
+            "example": "+15551234567"
+          }
+        },
+        "required": [
+          "type",
+          "number"
+        ]
+      },
+      "PostalAddressDto": {
+        "type": "object",
+        "properties": {
+          "line1": {
+            "type": "string",
+            "description": "Primary street address line",
+            "example": "123 Main St",
+            "maxLength": 255
+          },
+          "line2": {
+            "type": "string",
+            "description": "Secondary street information",
+            "example": "Apt 4B",
+            "maxLength": 255
+          },
+          "city": {
+            "type": "string",
+            "description": "City or locality",
+            "example": "Springfield",
+            "maxLength": 100
+          },
+          "state": {
+            "type": "string",
+            "description": "State, province, or region",
+            "example": "IL",
+            "maxLength": 100
+          },
+          "postalCode": {
+            "type": "string",
+            "description": "Postal or ZIP code",
+            "example": "62704",
+            "maxLength": 20
+          },
+          "country": {
+            "type": "string",
+            "description": "ISO 3166-1 alpha-2 country code",
+            "example": "US",
+            "minLength": 2,
+            "maxLength": 2
+          }
+        },
+        "required": [
+          "line1",
+          "city",
+          "state",
+          "postalCode",
+          "country"
+        ]
+      },
+      "PrivacySettingsDto": {
+        "type": "object",
+        "properties": {
+          "marketingEmailsEnabled": {
+            "type": "boolean",
+            "description": "Whether the customer receives marketing emails",
+            "example": true
+          },
+          "twoFactorEnabled": {
+            "type": "boolean",
+            "description": "Whether multi-factor authentication is enabled for the customer",
+            "example": true
+          }
+        },
+        "required": [
+          "marketingEmailsEnabled",
+          "twoFactorEnabled"
+        ]
+      },
+      "CustomerResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the customer",
+            "format": "uuid"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Customer first name"
+          },
+          "middleName": {
+            "type": "object",
+            "description": "Customer middle name"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Customer last name"
+          },
+          "emails": {
+            "description": "Collection of customer emails",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "phoneNumbers": {
+            "description": "Set of phone numbers for the customer",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PhoneNumberDto"
+            }
+          },
+          "address": {
+            "description": "Mailing address for the customer",
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PostalAddressDto"
+              }
+            ]
+          },
+          "privacySettings": {
+            "description": "Privacy configuration for the customer",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PrivacySettingsDto"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Timestamp the customer record was created",
+            "example": "2025-09-26T00:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Timestamp the customer record was last updated",
+            "example": "2025-09-26T00:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "firstName",
+          "lastName",
+          "emails",
+          "phoneNumbers",
+          "privacySettings",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "CreateCustomerDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Externally supplied identifier for the customer",
+            "format": "uuid"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Customer first name",
+            "example": "Jane",
+            "maxLength": 255
+          },
+          "middleName": {
+            "type": "string",
+            "description": "Customer middle name",
+            "example": "Ann",
+            "maxLength": 255
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Customer last name",
+            "example": "Doe",
+            "maxLength": 255
+          },
+          "emails": {
+            "description": "Unique set of customer email addresses",
+            "example": [
+              "jane.doe@example.com"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "phoneNumbers": {
+            "description": "Collection of phone numbers associated with the customer",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PhoneNumberDto"
+            }
+          },
+          "address": {
+            "description": "Physical mailing address for the customer",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PostalAddressDto"
+              }
+            ]
+          },
+          "privacySettings": {
+            "description": "Privacy preferences associated with the customer",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PrivacySettingsDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "firstName",
+          "lastName",
+          "emails",
+          "phoneNumbers",
+          "privacySettings"
+        ]
+      },
+      "UpdateCustomerDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Externally supplied identifier for the customer",
+            "format": "uuid"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Customer first name",
+            "example": "Jane",
+            "maxLength": 255
+          },
+          "middleName": {
+            "type": "string",
+            "description": "Customer middle name",
+            "example": "Ann",
+            "maxLength": 255
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Customer last name",
+            "example": "Doe",
+            "maxLength": 255
+          },
+          "emails": {
+            "description": "Unique set of customer email addresses",
+            "example": [
+              "jane.doe@example.com"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "phoneNumbers": {
+            "description": "Collection of phone numbers associated with the customer",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PhoneNumberDto"
+            }
+          },
+          "address": {
+            "description": "Physical mailing address for the customer",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PostalAddressDto"
+              }
+            ]
+          },
+          "privacySettings": {
+            "description": "Privacy preferences associated with the customer",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PrivacySettingsDto"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
