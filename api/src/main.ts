@@ -17,7 +17,6 @@ import { AppModule } from './app.module';
 import { JsonLogger } from './common/logging/json-logger.service';
 import { LoggingInterceptor } from './common/logging/logging.interceptor';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
-import { ProblemDetailsDto } from './common/dtos/problem-details.dto';
 import { configureSwagger } from './common/swagger/swagger.config';
 
 async function bootstrap(): Promise<void> {
