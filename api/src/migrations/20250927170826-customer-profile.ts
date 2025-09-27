@@ -21,7 +21,7 @@ export class CustomerProfile20250927170826 implements MigrationInterface {
       "CREATE TYPE \"customer_profile_phone_numbers_type_enum\" AS ENUM ('mobile','home','work','other')",
     );
     await queryRunner.query(
-      `CREATE TABLE "customer_profiles" (
+      `CREATE TABLE "customer" (
         "id" uuid NOT NULL DEFAULT gen_random_uuid(),
         "first_name" text NOT NULL,
         "middle_name" text,
@@ -43,7 +43,7 @@ export class CustomerProfile20250927170826 implements MigrationInterface {
         CONSTRAINT "pk_customer_profile_addresses" PRIMARY KEY ("customer_profile_id"),
         CONSTRAINT "fk_customer_profile_addresses__customer_profiles__customer_profile_id"
           FOREIGN KEY ("customer_profile_id")
-          REFERENCES "customer_profiles"("id")
+          REFERENCES "customer"("id")
           ON DELETE CASCADE
       )`,
     );
@@ -72,7 +72,7 @@ export class CustomerProfile20250927170826 implements MigrationInterface {
         "type" "customer_profile_phone_numbers_type_enum" NOT NULL,
         "number" character varying(16) NOT NULL,
         CONSTRAINT "pk_customer_profile_phone_numbers" PRIMARY KEY ("id"),
-        CONSTRAINT "fk_customer_profile_phone_numbers__customer_profiles__customer_profile_id"
+        CONSTRAINT "fk_customer_profile_phone_numbers___customer_profile_id"
           FOREIGN KEY ("customer_profile_id")
           REFERENCES "customer_profiles"("id")
           ON DELETE CASCADE
