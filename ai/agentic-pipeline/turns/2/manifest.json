@@ -1,0 +1,24 @@
+{
+  "turn": 2,
+  "tasks": [
+    "Task — Generate DB Migration and README from JSON Schema"
+  ],
+  "artifacts": [
+    "api/src/database/data-source.ts",
+    "api/src/migrations/20250927170826-customer-profile.ts",
+    "api/src/customer/entities/*.ts",
+    "api/README.migrations/customer-profile.md"
+  ],
+  "tools": [
+    {
+      "name": "npm",
+      "command": "npm install dotenv@^16.4.5 --save",
+      "cwd": "api"
+    },
+    {
+      "name": "npm",
+      "command": "npm run build",
+      "cwd": "api"
+    }
+  ]
+}

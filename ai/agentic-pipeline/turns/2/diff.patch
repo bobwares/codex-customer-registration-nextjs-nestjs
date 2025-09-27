@@ -1,0 +1,1428 @@
+diff --git a/ai/agentic-pipeline/turns/2/adr.md b/ai/agentic-pipeline/turns/2/adr.md
+new file mode 100644
+index 0000000..cd4c059
+--- /dev/null
++++ b/ai/agentic-pipeline/turns/2/adr.md
+@@ -0,0 +1,20 @@
++# Normalize CustomerProfile Schema into Relational Tables
++
++**Status**: Accepted
++
++**Date**: 2025-09-27
++
++**Context**
++The CustomerProfile JSON schema describes nested objects and arrays (emails, phone numbers, address, privacy settings). We need a
++ TypeORM migration and entities that faithfully represent the schema while enabling relational integrity and query performance.
++
++**Decision**
++- Represent the root profile data in `customer_profiles` with boolean columns for privacy settings.
++- Normalize emails, phone numbers, and addresses into dedicated tables with cascaded foreign keys rather than storing them as JSONB blobs.
++- Create a dedicated Postgres enum (`customer_profile_phone_numbers_type_enum`) to encode the phone number type domain.
++- Generate TypeORM entity classes mirroring the migration to support future repository/service work.
++
++**Consequences**
++- Structured tables enforce uniqueness, required fields, and relational integrity consistent with the schema.
++- Additional joins are required to hydrate full profiles, but indexes mitigate query costs.
++- Future migrations must maintain the enum and relational structure; schema evolution is additive and reversible via `down()`.
+diff --git a/ai/agentic-pipeline/turns/2/changelog.md b/ai/agentic-pipeline/turns/2/changelog.md
+new file mode 100644
+index 0000000..59e599b
+--- /dev/null
++++ b/ai/agentic-pipeline/turns/2/changelog.md
+@@ -0,0 +1,18 @@
++# Turn: 2 – 2025-09-27T17:08:26Z
++
++## Prompt
++Execute Task — Generate DB Migration and README from JSON Schema
++
++#### Task
++Task — Generate DB Migration and README from JSON Schema
++
++#### Changes
++- Added TypeORM DataSource configuration that loads `.env` and exposes migrations.
++- Generated customer profile migration with normalized tables, enum, and indexes.
++- Authored Customer domain entity classes aligned with the new schema.
++- Documented migration runbook in `api/README.migrations/customer-profile.md`.
++- Logged decisions in ADR and updated npm dependencies for dotenv support.
++
++#### Tools Executed
++- npm install dotenv@^16.4.5 --save
++- npm run build
+diff --git a/ai/agentic-pipeline/turns/2/diff.patch b/ai/agentic-pipeline/turns/2/diff.patch
+new file mode 100644
+index 0000000..2063b3e
+--- /dev/null
++++ b/ai/agentic-pipeline/turns/2/diff.patch
+@@ -0,0 +1,711 @@
++diff --git a/ai/agentic-pipeline/turns/2/adr.md b/ai/agentic-pipeline/turns/2/adr.md
++new file mode 100644
++index 0000000..cd4c059
++--- /dev/null
+++++ b/ai/agentic-pipeline/turns/2/adr.md
++@@ -0,0 +1,20 @@
+++# Normalize CustomerProfile Schema into Relational Tables
+++
+++**Status**: Accepted
+++
+++**Date**: 2025-09-27
+++
+++**Context**
+++The CustomerProfile JSON schema describes nested objects and arrays (emails, phone numbers, address, privacy settings). We need a
+++ TypeORM migration and entities that faithfully represent the schema while enabling relational integrity and query performance.
+++
+++**Decision**
+++- Represent the root profile data in `customer_profiles` with boolean columns for privacy settings.
+++- Normalize emails, phone numbers, and addresses into dedicated tables with cascaded foreign keys rather than storing them as JSONB blobs.
+++- Create a dedicated Postgres enum (`customer_profile_phone_numbers_type_enum`) to encode the phone number type domain.
+++- Generate TypeORM entity classes mirroring the migration to support future repository/service work.
+++
+++**Consequences**
+++- Structured tables enforce uniqueness, required fields, and relational integrity consistent with the schema.
+++- Additional joins are required to hydrate full profiles, but indexes mitigate query costs.
+++- Future migrations must maintain the enum and relational structure; schema evolution is additive and reversible via `down()`.
++diff --git a/ai/agentic-pipeline/turns/2/changelog.md b/ai/agentic-pipeline/turns/2/changelog.md
++new file mode 100644
++index 0000000..59e599b
++--- /dev/null
+++++ b/ai/agentic-pipeline/turns/2/changelog.md
++@@ -0,0 +1,18 @@
+++# Turn: 2 – 2025-09-27T17:08:26Z
+++
+++## Prompt
+++Execute Task — Generate DB Migration and README from JSON Schema
+++
+++#### Task
+++Task — Generate DB Migration and README from JSON Schema
+++
+++#### Changes
+++- Added TypeORM DataSource configuration that loads `.env` and exposes migrations.
+++- Generated customer profile migration with normalized tables, enum, and indexes.
+++- Authored Customer domain entity classes aligned with the new schema.
+++- Documented migration runbook in `api/README.migrations/customer-profile.md`.
+++- Logged decisions in ADR and updated npm dependencies for dotenv support.
+++
+++#### Tools Executed
+++- npm install dotenv@^16.4.5 --save
+++- npm run build
++diff --git a/ai/agentic-pipeline/turns/2/manifest.json b/ai/agentic-pipeline/turns/2/manifest.json
++new file mode 100644
++index 0000000..802eb62
++--- /dev/null
+++++ b/ai/agentic-pipeline/turns/2/manifest.json
++@@ -0,0 +1,24 @@
+++{
+++  "turn": 2,
+++  "tasks": [
+++    "Task — Generate DB Migration and README from JSON Schema"
+++  ],
+++  "artifacts": [
+++    "api/src/database/data-source.ts",
+++    "api/src/migrations/20250927170826-customer-profile.ts",
+++    "api/src/customer/entities/*.ts",
+++    "api/README.migrations/customer-profile.md"
+++  ],
+++  "tools": [
+++    {
+++      "name": "npm",
+++      "command": "npm install dotenv@^16.4.5 --save",
+++      "cwd": "api"
+++    },
+++    {
+++      "name": "npm",
+++      "command": "npm run build",
+++      "cwd": "api"
+++    }
+++  ]
+++}
++diff --git a/ai/agentic-pipeline/turns/2/session_context_values.md b/ai/agentic-pipeline/turns/2/session_context_values.md
++new file mode 100644
++index 0000000..5eb1f36
++--- /dev/null
+++++ b/ai/agentic-pipeline/turns/2/session_context_values.md
++@@ -0,0 +1,10 @@
+++# Session Context Values
+++
+++- sandbox_base_directory: /workspace
+++- agentic_pipeline: /workspace/codex-agentic-ai-pipeline
+++- target_project: codex-customer-registration-nextjs-nestjs
+++- project_context: /workspace/codex-customer-registration-nextjs-nestjs/ai/context
+++- turn_task: Execute Task — Generate DB Migration and README from JSON Schema
+++- turn_id: 2
+++- application_implementation_pattern: full-stack-app-nextjs-nestjs
+++- patterns: [aws-serverless-typescript, full-stack-app-nextjs-nestjs, spring-boot-mvc-jpa-postgresql]
++diff --git a/ai/agentic-pipeline/turns/index.csv b/ai/agentic-pipeline/turns/index.csv
++index 29522db..176b362 100644
++--- a/ai/agentic-pipeline/turns/index.csv
+++++ b/ai/agentic-pipeline/turns/index.csv
++@@ -1,2 +1,3 @@
++ turnId,timestampUtc,task,branch,tag,headAfter,testsPassed,testsFailed,coverageDeltaPct
++ 1,2025-09-27T16:09:08Z,Turn1-API-tasks,work,,HEAD,6,0,
+++2,2025-09-27T17:08:26Z,Task-Generate-DB-Migration-and-README,work,,HEAD,0,0,
++diff --git a/api/README.migrations/customer-profile.md b/api/README.migrations/customer-profile.md
++new file mode 100644
++index 0000000..a5584f9
++--- /dev/null
+++++ b/api/README.migrations/customer-profile.md
++@@ -0,0 +1,94 @@
+++# CustomerProfile Migration
+++
+++- **Source schema**: [`ai/context/schemas/customer.schema.json`](../../ai/context/schemas/customer.schema.json)
+++- **Generated from commit**: `89bd82f49e77b1dd98de83eea962e51823cb1b0a` (schema baseline prior to this migration)
+++
+++## Relational Model Overview
+++
+++| Table | Purpose |
+++| --- | --- |
+++| `customer_profiles` | Core customer identity and privacy preferences. |
+++| `customer_profile_addresses` | Optional postal address for a profile (1:1). |
+++| `customer_profile_emails` | Email addresses associated with a profile (1:N). |
+++| `customer_profile_phone_numbers` | Phone numbers with typed categories (1:N). |
+++
+++## Column Reference
+++
+++### `customer_profiles`
+++
+++| Column | Type | Null? | Default | Notes |
+++| --- | --- | --- | --- | --- |
+++| `id` | `uuid` | NO | `gen_random_uuid()` | Primary key. |
+++| `first_name` | `text` | NO | — | Required by schema. |
+++| `middle_name` | `text` | YES | — | Optional middle/initial. |
+++| `last_name` | `text` | NO | — | Required by schema. |
+++| `marketing_emails_enabled` | `boolean` | NO | — | Mirrors `privacySettings.marketingEmailsEnabled`. |
+++| `two_factor_enabled` | `boolean` | NO | — | Mirrors `privacySettings.twoFactorEnabled`. |
+++
+++### `customer_profile_addresses`
+++
+++| Column | Type | Null? | Default | Notes |
+++| --- | --- | --- | --- | --- |
+++| `customer_profile_id` | `uuid` | NO | — | PK & FK to `customer_profiles.id`. |
+++| `line1` | `text` | NO | — | Required when address present. |
+++| `line2` | `text` | YES | — | Optional second line. |
+++| `city` | `text` | NO | — | |
+++| `state` | `text` | NO | — | |
+++| `postal_code` | `text` | NO | — | |
+++| `country` | `char(2)` | NO | — | ISO 3166-1 alpha-2. |
+++
+++### `customer_profile_emails`
+++
+++| Column | Type | Null? | Default | Notes |
+++| --- | --- | --- | --- | --- |
+++| `id` | `bigserial` | NO | sequence | Surrogate PK. |
+++| `customer_profile_id` | `uuid` | NO | — | FK to `customer_profiles.id`. |
+++| `email` | `varchar(320)` | NO | — | Enforces RFC 5321 max length. |
+++
+++**Indexes & Constraints**
+++
+++- `pk_customer_profile_emails` – primary key (`id`).
+++- `uq_customer_profile_emails__customer_profile_id__email` – enforces per-profile uniqueness and JSON schema `uniqueItems`.
+++- `ix_customer_profile_emails__customer_profile_id` – speeds lookups by profile.
+++
+++### `customer_profile_phone_numbers`
+++
+++| Column | Type | Null? | Default | Notes |
+++| --- | --- | --- | --- | --- |
+++| `id` | `bigserial` | NO | sequence | Surrogate PK. |
+++| `customer_profile_id` | `uuid` | NO | — | FK to `customer_profiles.id`. |
+++| `type` | `customer_profile_phone_numbers_type_enum` | NO | — | Enum: `mobile`, `home`, `work`, `other`. |
+++| `number` | `varchar(16)` | NO | — | Supports E.164 (max 15 digits + `+`). |
+++
+++**Indexes & Constraints**
+++
+++- `pk_customer_profile_phone_numbers` – primary key (`id`).
+++- `ix_customer_profile_phone_numbers__customer_profile_id` – query by owner profile.
+++
+++## Enumerations
+++
+++- `customer_profile_phone_numbers_type_enum` – Postgres enum with values `mobile`, `home`, `work`, `other`.
+++
+++## Running the Migration
+++
+++```bash
+++cd api
+++npx typeorm migration:run -d src/database/data-source.ts
+++```
+++
+++## Reverting the Migration
+++
+++```bash
+++cd api
+++npx typeorm migration:revert -d src/database/data-source.ts
+++```
+++
+++## Troubleshooting
+++
+++- **Missing `pgcrypto` extension**: the migration enables it with `CREATE EXTENSION IF NOT EXISTS "pgcrypto"`. Ensure the connected user has privileges to install extensions.
+++- **SSL connection issues**: set `DATABASE_SSL=false` locally or provide CA certs if your Postgres cluster enforces SSL.
+++- **Enum mismatch**: if you previously altered enum values manually, drop dependent objects before rerunning or adjust using a follow-up migration.
+++
+++## Change Log
+++
+++- _2025-09-27_: Initial migration generated from `CustomerProfile` schema.
++diff --git a/api/package-lock.json b/api/package-lock.json
++index 7ef87ec..d924fa1 100644
++--- a/api/package-lock.json
+++++ b/api/package-lock.json
++@@ -19,6 +19,7 @@
++         "axios": "^1.9.0",
++         "class-transformer": "^0.5.1",
++         "class-validator": "^0.14.2",
+++        "dotenv": "^16.6.1",
++         "joi": "^17.10.0",
++         "pg": "^8.16.0",
++         "reflect-metadata": "^0.2.2",
++@@ -2852,6 +2853,18 @@
++         "rxjs": "^7.1.0"
++       }
++     },
+++    "node_modules/@nestjs/config/node_modules/dotenv": {
+++      "version": "16.4.7",
+++      "resolved": "https://registry.npmjs.org/dotenv/-/dotenv-16.4.7.tgz",
+++      "integrity": "sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==",
+++      "license": "BSD-2-Clause",
+++      "engines": {
+++        "node": ">=12"
+++      },
+++      "funding": {
+++        "url": "https://dotenvx.com"
+++      }
+++    },
++     "node_modules/@nestjs/core": {
++       "version": "11.1.6",
++       "resolved": "https://registry.npmjs.org/@nestjs/core/-/core-11.1.6.tgz",
++@@ -5542,9 +5555,9 @@
++       }
++     },
++     "node_modules/dotenv": {
++-      "version": "16.4.7",
++-      "resolved": "https://registry.npmjs.org/dotenv/-/dotenv-16.4.7.tgz",
++-      "integrity": "sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==",
+++      "version": "16.6.1",
+++      "resolved": "https://registry.npmjs.org/dotenv/-/dotenv-16.6.1.tgz",
+++      "integrity": "sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==",
++       "license": "BSD-2-Clause",
++       "engines": {
++         "node": ">=12"
++diff --git a/api/package.json b/api/package.json
++index 1eec240..0b8a884 100644
++--- a/api/package.json
+++++ b/api/package.json
++@@ -30,10 +30,11 @@
++     "axios": "^1.9.0",
++     "class-transformer": "^0.5.1",
++     "class-validator": "^0.14.2",
+++    "dotenv": "^16.6.1",
+++    "joi": "^17.10.0",
++     "pg": "^8.16.0",
++     "reflect-metadata": "^0.2.2",
++     "rxjs": "^7.8.2",
++-    "joi": "^17.10.0",
++     "typeorm": "^0.3.24"
++   },
++   "devDependencies": {
++diff --git a/api/src/customer/entities/customer-address.entity.ts b/api/src/customer/entities/customer-address.entity.ts
++new file mode 100644
++index 0000000..7add3dd
++--- /dev/null
+++++ b/api/src/customer/entities/customer-address.entity.ts
++@@ -0,0 +1,44 @@
+++/**
+++ * App: Customer Registration
+++ * Package: api/src/customer/entities
+++ * File: customer-address.entity.ts
+++ * Version: 0.1.0
+++ * Turns: 2
+++ * Author: Codex Agent
+++ * Date: 2025-09-27T17:08:26Z
+++ * Exports: CustomerAddress
+++ * Description: Captures the optional postal address associated with a customer profile using a one-to-one
+++ *              relationship.
+++ */
+++import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+++import { CustomerProfile } from './customer-profile.entity';
+++
+++@Entity({ name: 'customer_profile_addresses' })
+++export class CustomerAddress {
+++  @PrimaryColumn('uuid', { name: 'customer_profile_id' })
+++  public customerProfileId!: string;
+++
+++  @Column('text', { name: 'line1' })
+++  public line1!: string;
+++
+++  @Column('text', { name: 'line2', nullable: true })
+++  public line2?: string | null;
+++
+++  @Column('text', { name: 'city' })
+++  public city!: string;
+++
+++  @Column('text', { name: 'state' })
+++  public state!: string;
+++
+++  @Column('text', { name: 'postal_code' })
+++  public postalCode!: string;
+++
+++  @Column('character varying', { name: 'country', length: 2 })
+++  public country!: string;
+++
+++  @OneToOne(() => CustomerProfile, (profile) => profile.address, {
+++    onDelete: 'CASCADE',
+++  })
+++  @JoinColumn({ name: 'customer_profile_id', referencedColumnName: 'id' })
+++  public customerProfile!: CustomerProfile;
+++}
++diff --git a/api/src/customer/entities/customer-email.entity.ts b/api/src/customer/entities/customer-email.entity.ts
++new file mode 100644
++index 0000000..90d07ca
++--- /dev/null
+++++ b/api/src/customer/entities/customer-email.entity.ts
++@@ -0,0 +1,46 @@
+++/**
+++ * App: Customer Registration
+++ * Package: api/src/customer/entities
+++ * File: customer-email.entity.ts
+++ * Version: 0.1.0
+++ * Turns: 2
+++ * Author: Codex Agent
+++ * Date: 2025-09-27T17:08:26Z
+++ * Exports: CustomerEmail
+++ * Description: Models an individual customer email address with uniqueness and relation back to the
+++ *              owning customer profile.
+++ */
+++import {
+++  Column,
+++  Entity,
+++  Index,
+++  JoinColumn,
+++  ManyToOne,
+++  PrimaryGeneratedColumn,
+++  RelationId,
+++  Unique,
+++} from 'typeorm';
+++import { CustomerProfile } from './customer-profile.entity';
+++
+++@Entity({ name: 'customer_profile_emails' })
+++@Unique('uq_customer_profile_emails__customer_profile_id__email', [
+++  'customerProfileId',
+++  'email',
+++])
+++@Index('ix_customer_profile_emails__customer_profile_id', ['customerProfileId'])
+++export class CustomerEmail {
+++  @PrimaryGeneratedColumn({ type: 'bigint', name: 'id' })
+++  public id!: string;
+++
+++  @Column('character varying', { name: 'email', length: 320 })
+++  public email!: string;
+++
+++  @ManyToOne(() => CustomerProfile, (profile) => profile.emails, {
+++    onDelete: 'CASCADE',
+++  })
+++  @JoinColumn({ name: 'customer_profile_id', referencedColumnName: 'id' })
+++  public customerProfile!: CustomerProfile;
+++
+++  @RelationId((email: CustomerEmail) => email.customerProfile)
+++  public customerProfileId!: string;
+++}
++diff --git a/api/src/customer/entities/customer-phone-number.entity.ts b/api/src/customer/entities/customer-phone-number.entity.ts
++new file mode 100644
++index 0000000..20ee992
++--- /dev/null
+++++ b/api/src/customer/entities/customer-phone-number.entity.ts
++@@ -0,0 +1,56 @@
+++/**
+++ * App: Customer Registration
+++ * Package: api/src/customer/entities
+++ * File: customer-phone-number.entity.ts
+++ * Version: 0.1.0
+++ * Turns: 2
+++ * Author: Codex Agent
+++ * Date: 2025-09-27T17:08:26Z
+++ * Exports: CustomerPhoneNumber, CustomerPhoneType
+++ * Description: Represents a customer's phone number with enum-backed type and relation to the customer
+++ *              profile aggregate.
+++ */
+++import {
+++  Column,
+++  Entity,
+++  Index,
+++  JoinColumn,
+++  ManyToOne,
+++  PrimaryGeneratedColumn,
+++  RelationId,
+++} from 'typeorm';
+++import { CustomerProfile } from './customer-profile.entity';
+++
+++export enum CustomerPhoneType {
+++  MOBILE = 'mobile',
+++  HOME = 'home',
+++  WORK = 'work',
+++  OTHER = 'other',
+++}
+++
+++@Entity({ name: 'customer_profile_phone_numbers' })
+++@Index('ix_customer_profile_phone_numbers__customer_profile_id', ['customerProfileId'])
+++export class CustomerPhoneNumber {
+++  @PrimaryGeneratedColumn({ type: 'bigint', name: 'id' })
+++  public id!: string;
+++
+++  @Column({
+++    type: 'enum',
+++    enum: CustomerPhoneType,
+++    enumName: 'customer_profile_phone_numbers_type_enum',
+++    name: 'type',
+++  })
+++  public type!: CustomerPhoneType;
+++
+++  @Column('character varying', { name: 'number', length: 16 })
+++  public number!: string;
+++
+++  @ManyToOne(() => CustomerProfile, (profile) => profile.phoneNumbers, {
+++    onDelete: 'CASCADE',
+++  })
+++  @JoinColumn({ name: 'customer_profile_id', referencedColumnName: 'id' })
+++  public customerProfile!: CustomerProfile;
+++
+++  @RelationId((phone: CustomerPhoneNumber) => phone.customerProfile)
+++  public customerProfileId!: string;
+++}
++diff --git a/api/src/customer/entities/customer-profile.entity.ts b/api/src/customer/entities/customer-profile.entity.ts
++new file mode 100644
++index 0000000..0f4fefe
++--- /dev/null
+++++ b/api/src/customer/entities/customer-profile.entity.ts
++@@ -0,0 +1,58 @@
+++/**
+++ * App: Customer Registration
+++ * Package: api/src/customer/entities
+++ * File: customer-profile.entity.ts
+++ * Version: 0.1.0
+++ * Turns: 2
+++ * Author: Codex Agent
+++ * Date: 2025-09-27T17:08:26Z
+++ * Exports: CustomerProfile
+++ * Description: Defines the CustomerProfile aggregate root with relationships to emails, phone numbers,
+++ *              and address entities for persistence via TypeORM.
+++ */
+++import {
+++  Column,
+++  Entity,
+++  OneToMany,
+++  OneToOne,
+++  PrimaryGeneratedColumn,
+++} from 'typeorm';
+++import { CustomerAddress } from './customer-address.entity';
+++import { CustomerEmail } from './customer-email.entity';
+++import { CustomerPhoneNumber } from './customer-phone-number.entity';
+++
+++@Entity({ name: 'customer_profiles' })
+++export class CustomerProfile {
+++  @PrimaryGeneratedColumn('uuid', { name: 'id' })
+++  public id!: string;
+++
+++  @Column('text', { name: 'first_name' })
+++  public firstName!: string;
+++
+++  @Column('text', { name: 'middle_name', nullable: true })
+++  public middleName?: string | null;
+++
+++  @Column('text', { name: 'last_name' })
+++  public lastName!: string;
+++
+++  @Column('boolean', { name: 'marketing_emails_enabled' })
+++  public marketingEmailsEnabled!: boolean;
+++
+++  @Column('boolean', { name: 'two_factor_enabled' })
+++  public twoFactorEnabled!: boolean;
+++
+++  @OneToMany(() => CustomerEmail, (email) => email.customerProfile, {
+++    cascade: ['insert', 'update'],
+++  })
+++  public emails!: CustomerEmail[];
+++
+++  @OneToMany(() => CustomerPhoneNumber, (phone) => phone.customerProfile, {
+++    cascade: ['insert', 'update'],
+++  })
+++  public phoneNumbers?: CustomerPhoneNumber[];
+++
+++  @OneToOne(() => CustomerAddress, (address) => address.customerProfile, {
+++    cascade: ['insert', 'update'],
+++  })
+++  public address?: CustomerAddress | null;
+++}
++diff --git a/api/src/customer/entities/index.ts b/api/src/customer/entities/index.ts
++new file mode 100644
++index 0000000..a5a35aa
++--- /dev/null
+++++ b/api/src/customer/entities/index.ts
++@@ -0,0 +1,16 @@
+++/**
+++ * App: Customer Registration
+++ * Package: api/src/customer/entities
+++ * File: index.ts
+++ * Version: 0.1.0
+++ * Turns: 2
+++ * Author: Codex Agent
+++ * Date: 2025-09-27T17:08:26Z
+++ * Exports: CustomerAddress, CustomerEmail, CustomerPhoneNumber, CustomerPhoneType, CustomerProfile
+++ * Description: Re-exports all customer domain entity classes for simplified imports across the
+++ *              application.
+++ */
+++export * from './customer-address.entity';
+++export * from './customer-email.entity';
+++export * from './customer-phone-number.entity';
+++export * from './customer-profile.entity';
++diff --git a/api/src/database/data-source.ts b/api/src/database/data-source.ts
++new file mode 100644
++index 0000000..418696d
++--- /dev/null
+++++ b/api/src/database/data-source.ts
++@@ -0,0 +1,71 @@
+++/**
+++ * App: Customer Registration
+++ * Package: api/src/database
+++ * File: data-source.ts
+++ * Version: 0.1.0
+++ * Turns: 2
+++ * Author: Codex Agent
+++ * Date: 2025-09-27T17:08:26Z
+++ * Exports: dataSourceOptions, AppDataSource
+++ * Description: Configures the TypeORM DataSource by loading environment variables and exposing
+++ *              migration and entity discovery for CLI operations.
+++ */
+++import { config } from 'dotenv';
+++import { existsSync } from 'fs';
+++import { resolve } from 'path';
+++import { DataSource, DataSourceOptions } from 'typeorm';
+++
+++const envPath = resolve(process.cwd(), '.env');
+++if (existsSync(envPath)) {
+++  config({ path: envPath });
+++} else {
+++  config();
+++}
+++
+++const requiredEnvVars = [
+++  'DATABASE_HOST',
+++  'DATABASE_PORT',
+++  'DATABASE_USER',
+++  'DATABASE_PASSWORD',
+++  'DATABASE_NAME',
+++];
+++const missingEnvVars = requiredEnvVars.filter((key) =>
+++  (process.env[key] ?? '').toString().trim() === '',
+++);
+++
+++if (missingEnvVars.length > 0) {
+++  throw new Error(
+++    `Missing required database environment variables: ${missingEnvVars.join(', ')}`,
+++  );
+++}
+++
+++const isSslEnabled = (process.env.DATABASE_SSL ?? 'false')
+++  .toString()
+++  .toLowerCase() === 'true';
+++
+++const databaseHost = process.env.DATABASE_HOST as string;
+++const databasePort = Number.parseInt(process.env.DATABASE_PORT ?? '5432', 10);
+++const databaseUser = process.env.DATABASE_USER as string;
+++const databasePassword = process.env.DATABASE_PASSWORD as string;
+++const databaseName = process.env.DATABASE_NAME as string;
+++const databaseSchema = process.env.DATABASE_SCHEMA ?? 'public';
+++
+++export const dataSourceOptions: DataSourceOptions = {
+++  type: 'postgres',
+++  host: databaseHost,
+++  port: databasePort,
+++  username: databaseUser,
+++  password: databasePassword,
+++  database: databaseName,
+++  schema: databaseSchema,
+++  ssl: isSslEnabled ? { rejectUnauthorized: false } : false,
+++  synchronize: false,
+++  logging: false,
+++  entities: [resolve(__dirname, '..', '**', '*.entity.{ts,js}')],
+++  migrations: [resolve(__dirname, '..', 'migrations', '*.{ts,js}')],
+++  migrationsTableName: 'typeorm_migrations',
+++};
+++
+++export const AppDataSource = new DataSource(dataSourceOptions);
+++
+++export default AppDataSource;
++diff --git a/api/src/migrations/20250927170826-customer-profile.ts b/api/src/migrations/20250927170826-customer-profile.ts
++new file mode 100644
++index 0000000..e0ff742
++--- /dev/null
+++++ b/api/src/migrations/20250927170826-customer-profile.ts
++@@ -0,0 +1,100 @@
+++/**
+++ * App: Customer Registration
+++ * Package: api/src/migrations
+++ * File: 20250927170826-customer-profile.ts
+++ * Version: 0.1.0
+++ * Turns: 2
+++ * Author: Codex Agent
+++ * Date: 2025-09-27T17:08:26Z
+++ * Exports: CustomerProfile20250927170826
+++ * Description: Creates the customer profile domain tables, enumerations, and supporting indexes derived
+++ *              from the CustomerProfile JSON schema, ensuring reversible TypeORM migrations.
+++ */
+++import { MigrationInterface, QueryRunner } from 'typeorm';
+++
+++export class CustomerProfile20250927170826 implements MigrationInterface {
+++  public readonly name = 'CustomerProfile20250927170826';
+++
+++  public async up(queryRunner: QueryRunner): Promise<void> {
+++    await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "pgcrypto"');
+++    await queryRunner.query(
+++      "CREATE TYPE \"customer_profile_phone_numbers_type_enum\" AS ENUM ('mobile','home','work','other')",
+++    );
+++    await queryRunner.query(
+++      `CREATE TABLE "customer_profiles" (
+++        "id" uuid NOT NULL DEFAULT gen_random_uuid(),
+++        "first_name" text NOT NULL,
+++        "middle_name" text,
+++        "last_name" text NOT NULL,
+++        "marketing_emails_enabled" boolean NOT NULL,
+++        "two_factor_enabled" boolean NOT NULL,
+++        CONSTRAINT "pk_customer_profiles" PRIMARY KEY ("id")
+++      )`,
+++    );
+++    await queryRunner.query(
+++      `CREATE TABLE "customer_profile_addresses" (
+++        "customer_profile_id" uuid NOT NULL,
+++        "line1" text NOT NULL,
+++        "line2" text,
+++        "city" text NOT NULL,
+++        "state" text NOT NULL,
+++        "postal_code" text NOT NULL,
+++        "country" character varying(2) NOT NULL,
+++        CONSTRAINT "pk_customer_profile_addresses" PRIMARY KEY ("customer_profile_id"),
+++        CONSTRAINT "fk_customer_profile_addresses__customer_profiles__customer_profile_id"
+++          FOREIGN KEY ("customer_profile_id")
+++          REFERENCES "customer_profiles"("id")
+++          ON DELETE CASCADE
+++      )`,
+++    );
+++    await queryRunner.query(
+++      `CREATE TABLE "customer_profile_emails" (
+++        "id" BIGSERIAL NOT NULL,
+++        "customer_profile_id" uuid NOT NULL,
+++        "email" character varying(320) NOT NULL,
+++        CONSTRAINT "pk_customer_profile_emails" PRIMARY KEY ("id"),
+++        CONSTRAINT "uq_customer_profile_emails__customer_profile_id__email"
+++          UNIQUE ("customer_profile_id", "email"),
+++        CONSTRAINT "fk_customer_profile_emails__customer_profiles__customer_profile_id"
+++          FOREIGN KEY ("customer_profile_id")
+++          REFERENCES "customer_profiles"("id")
+++          ON DELETE CASCADE
+++      )`,
+++    );
+++    await queryRunner.query(
+++      `CREATE INDEX "ix_customer_profile_emails__customer_profile_id"
+++        ON "customer_profile_emails" ("customer_profile_id")`,
+++    );
+++    await queryRunner.query(
+++      `CREATE TABLE "customer_profile_phone_numbers" (
+++        "id" BIGSERIAL NOT NULL,
+++        "customer_profile_id" uuid NOT NULL,
+++        "type" "customer_profile_phone_numbers_type_enum" NOT NULL,
+++        "number" character varying(16) NOT NULL,
+++        CONSTRAINT "pk_customer_profile_phone_numbers" PRIMARY KEY ("id"),
+++        CONSTRAINT "fk_customer_profile_phone_numbers__customer_profiles__customer_profile_id"
+++          FOREIGN KEY ("customer_profile_id")
+++          REFERENCES "customer_profiles"("id")
+++          ON DELETE CASCADE
+++      )`,
+++    );
+++    await queryRunner.query(
+++      `CREATE INDEX "ix_customer_profile_phone_numbers__customer_profile_id"
+++        ON "customer_profile_phone_numbers" ("customer_profile_id")`,
+++    );
+++  }
+++
+++  public async down(queryRunner: QueryRunner): Promise<void> {
+++    await queryRunner.query(
+++      'DROP INDEX IF EXISTS "ix_customer_profile_phone_numbers__customer_profile_id"',
+++    );
+++    await queryRunner.query('DROP TABLE IF EXISTS "customer_profile_phone_numbers"');
+++    await queryRunner.query(
+++      'DROP INDEX IF EXISTS "ix_customer_profile_emails__customer_profile_id"',
+++    );
+++    await queryRunner.query('DROP TABLE IF EXISTS "customer_profile_emails"');
+++    await queryRunner.query('DROP TABLE IF EXISTS "customer_profile_addresses"');
+++    await queryRunner.query('DROP TABLE IF EXISTS "customer_profiles"');
+++    await queryRunner.query('DROP TYPE IF EXISTS "customer_profile_phone_numbers_type_enum"');
+++  }
+++}
++diff --git a/changelog.md b/changelog.md
++index d31e4c0..6d3fcfd 100644
++--- a/changelog.md
+++++ b/changelog.md
++@@ -4,3 +4,8 @@
++ - Scaffolded NestJS API with configuration validation and developer tooling.
++ - Added health check module with unit and E2E coverage plus REST client scripts.
++ - Implemented structured logging with request correlation and latency metrics.
+++
+++## Turn 2 – 2025-09-27 17:08:26 UTC
+++- Added TypeORM data-source configuration with environment validation and glob discovery.
+++- Generated customer profile migration with normalized tables, enums, and indexes.
+++- Created customer domain entities and migration runbook documentation.
+diff --git a/ai/agentic-pipeline/turns/2/manifest.json b/ai/agentic-pipeline/turns/2/manifest.json
+new file mode 100644
+index 0000000..802eb62
+--- /dev/null
++++ b/ai/agentic-pipeline/turns/2/manifest.json
+@@ -0,0 +1,24 @@
++{
++  "turn": 2,
++  "tasks": [
++    "Task — Generate DB Migration and README from JSON Schema"
++  ],
++  "artifacts": [
++    "api/src/database/data-source.ts",
++    "api/src/migrations/20250927170826-customer-profile.ts",
++    "api/src/customer/entities/*.ts",
++    "api/README.migrations/customer-profile.md"
++  ],
++  "tools": [
++    {
++      "name": "npm",
++      "command": "npm install dotenv@^16.4.5 --save",
++      "cwd": "api"
++    },
++    {
++      "name": "npm",
++      "command": "npm run build",
++      "cwd": "api"
++    }
++  ]
++}
+diff --git a/ai/agentic-pipeline/turns/2/session_context_values.md b/ai/agentic-pipeline/turns/2/session_context_values.md
+new file mode 100644
+index 0000000..5eb1f36
+--- /dev/null
++++ b/ai/agentic-pipeline/turns/2/session_context_values.md
+@@ -0,0 +1,10 @@
++# Session Context Values
++
++- sandbox_base_directory: /workspace
++- agentic_pipeline: /workspace/codex-agentic-ai-pipeline
++- target_project: codex-customer-registration-nextjs-nestjs
++- project_context: /workspace/codex-customer-registration-nextjs-nestjs/ai/context
++- turn_task: Execute Task — Generate DB Migration and README from JSON Schema
++- turn_id: 2
++- application_implementation_pattern: full-stack-app-nextjs-nestjs
++- patterns: [aws-serverless-typescript, full-stack-app-nextjs-nestjs, spring-boot-mvc-jpa-postgresql]
+diff --git a/ai/agentic-pipeline/turns/index.csv b/ai/agentic-pipeline/turns/index.csv
+index 29522db..176b362 100644
+--- a/ai/agentic-pipeline/turns/index.csv
++++ b/ai/agentic-pipeline/turns/index.csv
+@@ -1,2 +1,3 @@
+ turnId,timestampUtc,task,branch,tag,headAfter,testsPassed,testsFailed,coverageDeltaPct
+ 1,2025-09-27T16:09:08Z,Turn1-API-tasks,work,,HEAD,6,0,
++2,2025-09-27T17:08:26Z,Task-Generate-DB-Migration-and-README,work,,HEAD,0,0,
+diff --git a/api/README.migrations/customer-profile.md b/api/README.migrations/customer-profile.md
+new file mode 100644
+index 0000000..669d06a
+--- /dev/null
++++ b/api/README.migrations/customer-profile.md
+@@ -0,0 +1,94 @@
++# CustomerProfile Migration
++
++- **Source schema**: [`ai/context/schemas/customer.schema.json`](../../ai/context/schemas/customer.schema.json)
++- **Generated from commit**: `89bd82f49e77b1dd98de83eea962e51823cb1b0a` (schema baseline prior to this migration)
++
++## Relational Model Overview
++
++| Table | Purpose |
++| --- | --- |
++| `customer_profiles` | Core customer identity and privacy preferences. |
++| `customer_profile_addresses` | Optional postal address for a profile (1:1). |
++| `customer_profile_emails` | Email addresses associated with a profile (1:N). |
++| `customer_profile_phone_numbers` | Phone numbers with typed categories (1:N). |
++
++## Column Reference
++
++### `customer_profiles`
++
++| Column | Type | Null? | Default | Notes |
++| --- | --- | --- | --- | --- |
++| `id` | `uuid` | NO | `gen_random_uuid()` | Primary key. |
++| `first_name` | `text` | NO | — | Required by schema. |
++| `middle_name` | `text` | YES | — | Optional middle/initial. |
++| `last_name` | `text` | NO | — | Required by schema. |
++| `marketing_emails_enabled` | `boolean` | NO | — | Mirrors `privacySettings.marketingEmailsEnabled`. |
++| `two_factor_enabled` | `boolean` | NO | — | Mirrors `privacySettings.twoFactorEnabled`. |
++
++### `customer_profile_addresses`
++
++| Column | Type | Null? | Default | Notes |
++| --- | --- | --- | --- | --- |
++| `customer_profile_id` | `uuid` | NO | — | PK & FK to `customer_profiles.id`. |
++| `line1` | `text` | NO | — | Required when address present. |
++| `line2` | `text` | YES | — | Optional second line. |
++| `city` | `text` | NO | — | |
++| `state` | `text` | NO | — | |
++| `postal_code` | `text` | NO | — | |
++| `country` | `varchar(2)` | NO | — | ISO 3166-1 alpha-2. |
++
++### `customer_profile_emails`
++
++| Column | Type | Null? | Default | Notes |
++| --- | --- | --- | --- | --- |
++| `id` | `bigserial` | NO | sequence | Surrogate PK. |
++| `customer_profile_id` | `uuid` | NO | — | FK to `customer_profiles.id`. |
++| `email` | `varchar(320)` | NO | — | Enforces RFC 5321 max length. |
++
++**Indexes & Constraints**
++
++- `pk_customer_profile_emails` – primary key (`id`).
++- `uq_customer_profile_emails__customer_profile_id__email` – enforces per-profile uniqueness and JSON schema `uniqueItems`.
++- `ix_customer_profile_emails__customer_profile_id` – speeds lookups by profile.
++
++### `customer_profile_phone_numbers`
++
++| Column | Type | Null? | Default | Notes |
++| --- | --- | --- | --- | --- |
++| `id` | `bigserial` | NO | sequence | Surrogate PK. |
++| `customer_profile_id` | `uuid` | NO | — | FK to `customer_profiles.id`. |
++| `type` | `customer_profile_phone_numbers_type_enum` | NO | — | Enum: `mobile`, `home`, `work`, `other`. |
++| `number` | `varchar(16)` | NO | — | Supports E.164 (max 15 digits + `+`). |
++
++**Indexes & Constraints**
++
++- `pk_customer_profile_phone_numbers` – primary key (`id`).
++- `ix_customer_profile_phone_numbers__customer_profile_id` – query by owner profile.
++
++## Enumerations
++
++- `customer_profile_phone_numbers_type_enum` – Postgres enum with values `mobile`, `home`, `work`, `other`.
++
++## Running the Migration
++
++```bash
++cd api
++npx typeorm migration:run -d src/database/data-source.ts
++```
++
++## Reverting the Migration
++
++```bash
++cd api
++npx typeorm migration:revert -d src/database/data-source.ts
++```
++
++## Troubleshooting
++
++- **Missing `pgcrypto` extension**: the migration enables it with `CREATE EXTENSION IF NOT EXISTS "pgcrypto"`. Ensure the connected user has privileges to install extensions.
++- **SSL connection issues**: set `DATABASE_SSL=false` locally or provide CA certs if your Postgres cluster enforces SSL.
++- **Enum mismatch**: if you previously altered enum values manually, drop dependent objects before rerunning or adjust using a follow-up migration.
++
++## Change Log
++
++- _2025-09-27_: Initial migration generated from `CustomerProfile` schema.
+diff --git a/api/package-lock.json b/api/package-lock.json
+index 7ef87ec..d924fa1 100644
+--- a/api/package-lock.json
++++ b/api/package-lock.json
+@@ -19,6 +19,7 @@
+         "axios": "^1.9.0",
+         "class-transformer": "^0.5.1",
+         "class-validator": "^0.14.2",
++        "dotenv": "^16.6.1",
+         "joi": "^17.10.0",
+         "pg": "^8.16.0",
+         "reflect-metadata": "^0.2.2",
+@@ -2852,6 +2853,18 @@
+         "rxjs": "^7.1.0"
+       }
+     },
++    "node_modules/@nestjs/config/node_modules/dotenv": {
++      "version": "16.4.7",
++      "resolved": "https://registry.npmjs.org/dotenv/-/dotenv-16.4.7.tgz",
++      "integrity": "sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==",
++      "license": "BSD-2-Clause",
++      "engines": {
++        "node": ">=12"
++      },
++      "funding": {
++        "url": "https://dotenvx.com"
++      }
++    },
+     "node_modules/@nestjs/core": {
+       "version": "11.1.6",
+       "resolved": "https://registry.npmjs.org/@nestjs/core/-/core-11.1.6.tgz",
+@@ -5542,9 +5555,9 @@
+       }
+     },
+     "node_modules/dotenv": {
+-      "version": "16.4.7",
+-      "resolved": "https://registry.npmjs.org/dotenv/-/dotenv-16.4.7.tgz",
+-      "integrity": "sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==",
++      "version": "16.6.1",
++      "resolved": "https://registry.npmjs.org/dotenv/-/dotenv-16.6.1.tgz",
++      "integrity": "sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==",
+       "license": "BSD-2-Clause",
+       "engines": {
+         "node": ">=12"
+diff --git a/api/package.json b/api/package.json
+index 1eec240..0b8a884 100644
+--- a/api/package.json
++++ b/api/package.json
+@@ -30,10 +30,11 @@
+     "axios": "^1.9.0",
+     "class-transformer": "^0.5.1",
+     "class-validator": "^0.14.2",
++    "dotenv": "^16.6.1",
++    "joi": "^17.10.0",
+     "pg": "^8.16.0",
+     "reflect-metadata": "^0.2.2",
+     "rxjs": "^7.8.2",
+-    "joi": "^17.10.0",
+     "typeorm": "^0.3.24"
+   },
+   "devDependencies": {
+diff --git a/api/src/customer/entities/customer-address.entity.ts b/api/src/customer/entities/customer-address.entity.ts
+new file mode 100644
+index 0000000..7add3dd
+--- /dev/null
++++ b/api/src/customer/entities/customer-address.entity.ts
+@@ -0,0 +1,44 @@
++/**
++ * App: Customer Registration
++ * Package: api/src/customer/entities
++ * File: customer-address.entity.ts
++ * Version: 0.1.0
++ * Turns: 2
++ * Author: Codex Agent
++ * Date: 2025-09-27T17:08:26Z
++ * Exports: CustomerAddress
++ * Description: Captures the optional postal address associated with a customer profile using a one-to-one
++ *              relationship.
++ */
++import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
++import { CustomerProfile } from './customer-profile.entity';
++
++@Entity({ name: 'customer_profile_addresses' })
++export class CustomerAddress {
++  @PrimaryColumn('uuid', { name: 'customer_profile_id' })
++  public customerProfileId!: string;
++
++  @Column('text', { name: 'line1' })
++  public line1!: string;
++
++  @Column('text', { name: 'line2', nullable: true })
++  public line2?: string | null;
++
++  @Column('text', { name: 'city' })
++  public city!: string;
++
++  @Column('text', { name: 'state' })
++  public state!: string;
++
++  @Column('text', { name: 'postal_code' })
++  public postalCode!: string;
++
++  @Column('character varying', { name: 'country', length: 2 })
++  public country!: string;
++
++  @OneToOne(() => CustomerProfile, (profile) => profile.address, {
++    onDelete: 'CASCADE',
++  })
++  @JoinColumn({ name: 'customer_profile_id', referencedColumnName: 'id' })
++  public customerProfile!: CustomerProfile;
++}
+diff --git a/api/src/customer/entities/customer-email.entity.ts b/api/src/customer/entities/customer-email.entity.ts
+new file mode 100644
+index 0000000..90d07ca
+--- /dev/null
++++ b/api/src/customer/entities/customer-email.entity.ts
+@@ -0,0 +1,46 @@
++/**
++ * App: Customer Registration
++ * Package: api/src/customer/entities
++ * File: customer-email.entity.ts
++ * Version: 0.1.0
++ * Turns: 2
++ * Author: Codex Agent
++ * Date: 2025-09-27T17:08:26Z
++ * Exports: CustomerEmail
++ * Description: Models an individual customer email address with uniqueness and relation back to the
++ *              owning customer profile.
++ */
++import {
++  Column,
++  Entity,
++  Index,
++  JoinColumn,
++  ManyToOne,
++  PrimaryGeneratedColumn,
++  RelationId,
++  Unique,
++} from 'typeorm';
++import { CustomerProfile } from './customer-profile.entity';
++
++@Entity({ name: 'customer_profile_emails' })
++@Unique('uq_customer_profile_emails__customer_profile_id__email', [
++  'customerProfileId',
++  'email',
++])
++@Index('ix_customer_profile_emails__customer_profile_id', ['customerProfileId'])
++export class CustomerEmail {
++  @PrimaryGeneratedColumn({ type: 'bigint', name: 'id' })
++  public id!: string;
++
++  @Column('character varying', { name: 'email', length: 320 })
++  public email!: string;
++
++  @ManyToOne(() => CustomerProfile, (profile) => profile.emails, {
++    onDelete: 'CASCADE',
++  })
++  @JoinColumn({ name: 'customer_profile_id', referencedColumnName: 'id' })
++  public customerProfile!: CustomerProfile;
++
++  @RelationId((email: CustomerEmail) => email.customerProfile)
++  public customerProfileId!: string;
++}
+diff --git a/api/src/customer/entities/customer-phone-number.entity.ts b/api/src/customer/entities/customer-phone-number.entity.ts
+new file mode 100644
+index 0000000..20ee992
+--- /dev/null
++++ b/api/src/customer/entities/customer-phone-number.entity.ts
+@@ -0,0 +1,56 @@
++/**
++ * App: Customer Registration
++ * Package: api/src/customer/entities
++ * File: customer-phone-number.entity.ts
++ * Version: 0.1.0
++ * Turns: 2
++ * Author: Codex Agent
++ * Date: 2025-09-27T17:08:26Z
++ * Exports: CustomerPhoneNumber, CustomerPhoneType
++ * Description: Represents a customer's phone number with enum-backed type and relation to the customer
++ *              profile aggregate.
++ */
++import {
++  Column,
++  Entity,
++  Index,
++  JoinColumn,
++  ManyToOne,
++  PrimaryGeneratedColumn,
++  RelationId,
++} from 'typeorm';
++import { CustomerProfile } from './customer-profile.entity';
++
++export enum CustomerPhoneType {
++  MOBILE = 'mobile',
++  HOME = 'home',
++  WORK = 'work',
++  OTHER = 'other',
++}
++
++@Entity({ name: 'customer_profile_phone_numbers' })
++@Index('ix_customer_profile_phone_numbers__customer_profile_id', ['customerProfileId'])
++export class CustomerPhoneNumber {
++  @PrimaryGeneratedColumn({ type: 'bigint', name: 'id' })
++  public id!: string;
++
++  @Column({
++    type: 'enum',
++    enum: CustomerPhoneType,
++    enumName: 'customer_profile_phone_numbers_type_enum',
++    name: 'type',
++  })
++  public type!: CustomerPhoneType;
++
++  @Column('character varying', { name: 'number', length: 16 })
++  public number!: string;
++
++  @ManyToOne(() => CustomerProfile, (profile) => profile.phoneNumbers, {
++    onDelete: 'CASCADE',
++  })
++  @JoinColumn({ name: 'customer_profile_id', referencedColumnName: 'id' })
++  public customerProfile!: CustomerProfile;
++
++  @RelationId((phone: CustomerPhoneNumber) => phone.customerProfile)
++  public customerProfileId!: string;
++}
+diff --git a/api/src/customer/entities/customer-profile.entity.ts b/api/src/customer/entities/customer-profile.entity.ts
+new file mode 100644
+index 0000000..0f4fefe
+--- /dev/null
++++ b/api/src/customer/entities/customer-profile.entity.ts
+@@ -0,0 +1,58 @@
++/**
++ * App: Customer Registration
++ * Package: api/src/customer/entities
++ * File: customer-profile.entity.ts
++ * Version: 0.1.0
++ * Turns: 2
++ * Author: Codex Agent
++ * Date: 2025-09-27T17:08:26Z
++ * Exports: CustomerProfile
++ * Description: Defines the CustomerProfile aggregate root with relationships to emails, phone numbers,
++ *              and address entities for persistence via TypeORM.
++ */
++import {
++  Column,
++  Entity,
++  OneToMany,
++  OneToOne,
++  PrimaryGeneratedColumn,
++} from 'typeorm';
++import { CustomerAddress } from './customer-address.entity';
++import { CustomerEmail } from './customer-email.entity';
++import { CustomerPhoneNumber } from './customer-phone-number.entity';
++
++@Entity({ name: 'customer_profiles' })
++export class CustomerProfile {
++  @PrimaryGeneratedColumn('uuid', { name: 'id' })
++  public id!: string;
++
++  @Column('text', { name: 'first_name' })
++  public firstName!: string;
++
++  @Column('text', { name: 'middle_name', nullable: true })
++  public middleName?: string | null;
++
++  @Column('text', { name: 'last_name' })
++  public lastName!: string;
++
++  @Column('boolean', { name: 'marketing_emails_enabled' })
++  public marketingEmailsEnabled!: boolean;
++
++  @Column('boolean', { name: 'two_factor_enabled' })
++  public twoFactorEnabled!: boolean;
++
++  @OneToMany(() => CustomerEmail, (email) => email.customerProfile, {
++    cascade: ['insert', 'update'],
++  })
++  public emails!: CustomerEmail[];
++
++  @OneToMany(() => CustomerPhoneNumber, (phone) => phone.customerProfile, {
++    cascade: ['insert', 'update'],
++  })
++  public phoneNumbers?: CustomerPhoneNumber[];
++
++  @OneToOne(() => CustomerAddress, (address) => address.customerProfile, {
++    cascade: ['insert', 'update'],
++  })
++  public address?: CustomerAddress | null;
++}
+diff --git a/api/src/customer/entities/index.ts b/api/src/customer/entities/index.ts
+new file mode 100644
+index 0000000..a5a35aa
+--- /dev/null
++++ b/api/src/customer/entities/index.ts
+@@ -0,0 +1,16 @@
++/**
++ * App: Customer Registration
++ * Package: api/src/customer/entities
++ * File: index.ts
++ * Version: 0.1.0
++ * Turns: 2
++ * Author: Codex Agent
++ * Date: 2025-09-27T17:08:26Z
++ * Exports: CustomerAddress, CustomerEmail, CustomerPhoneNumber, CustomerPhoneType, CustomerProfile
++ * Description: Re-exports all customer domain entity classes for simplified imports across the
++ *              application.
++ */
++export * from './customer-address.entity';
++export * from './customer-email.entity';
++export * from './customer-phone-number.entity';
++export * from './customer-profile.entity';
+diff --git a/api/src/database/data-source.ts b/api/src/database/data-source.ts
+new file mode 100644
+index 0000000..418696d
+--- /dev/null
++++ b/api/src/database/data-source.ts
+@@ -0,0 +1,71 @@
++/**
++ * App: Customer Registration
++ * Package: api/src/database
++ * File: data-source.ts
++ * Version: 0.1.0
++ * Turns: 2
++ * Author: Codex Agent
++ * Date: 2025-09-27T17:08:26Z
++ * Exports: dataSourceOptions, AppDataSource
++ * Description: Configures the TypeORM DataSource by loading environment variables and exposing
++ *              migration and entity discovery for CLI operations.
++ */
++import { config } from 'dotenv';
++import { existsSync } from 'fs';
++import { resolve } from 'path';
++import { DataSource, DataSourceOptions } from 'typeorm';
++
++const envPath = resolve(process.cwd(), '.env');
++if (existsSync(envPath)) {
++  config({ path: envPath });
++} else {
++  config();
++}
++
++const requiredEnvVars = [
++  'DATABASE_HOST',
++  'DATABASE_PORT',
++  'DATABASE_USER',
++  'DATABASE_PASSWORD',
++  'DATABASE_NAME',
++];
++const missingEnvVars = requiredEnvVars.filter((key) =>
++  (process.env[key] ?? '').toString().trim() === '',
++);
++
++if (missingEnvVars.length > 0) {
++  throw new Error(
++    `Missing required database environment variables: ${missingEnvVars.join(', ')}`,
++  );
++}
++
++const isSslEnabled = (process.env.DATABASE_SSL ?? 'false')
++  .toString()
++  .toLowerCase() === 'true';
++
++const databaseHost = process.env.DATABASE_HOST as string;
++const databasePort = Number.parseInt(process.env.DATABASE_PORT ?? '5432', 10);
++const databaseUser = process.env.DATABASE_USER as string;
++const databasePassword = process.env.DATABASE_PASSWORD as string;
++const databaseName = process.env.DATABASE_NAME as string;
++const databaseSchema = process.env.DATABASE_SCHEMA ?? 'public';
++
++export const dataSourceOptions: DataSourceOptions = {
++  type: 'postgres',
++  host: databaseHost,
++  port: databasePort,
++  username: databaseUser,
++  password: databasePassword,
++  database: databaseName,
++  schema: databaseSchema,
++  ssl: isSslEnabled ? { rejectUnauthorized: false } : false,
++  synchronize: false,
++  logging: false,
++  entities: [resolve(__dirname, '..', '**', '*.entity.{ts,js}')],
++  migrations: [resolve(__dirname, '..', 'migrations', '*.{ts,js}')],
++  migrationsTableName: 'typeorm_migrations',
++};
++
++export const AppDataSource = new DataSource(dataSourceOptions);
++
++export default AppDataSource;
+diff --git a/api/src/migrations/20250927170826-customer-profile.ts b/api/src/migrations/20250927170826-customer-profile.ts
+new file mode 100644
+index 0000000..e0ff742
+--- /dev/null
++++ b/api/src/migrations/20250927170826-customer-profile.ts
+@@ -0,0 +1,100 @@
++/**
++ * App: Customer Registration
++ * Package: api/src/migrations
++ * File: 20250927170826-customer-profile.ts
++ * Version: 0.1.0
++ * Turns: 2
++ * Author: Codex Agent
++ * Date: 2025-09-27T17:08:26Z
++ * Exports: CustomerProfile20250927170826
++ * Description: Creates the customer profile domain tables, enumerations, and supporting indexes derived
++ *              from the CustomerProfile JSON schema, ensuring reversible TypeORM migrations.
++ */
++import { MigrationInterface, QueryRunner } from 'typeorm';
++
++export class CustomerProfile20250927170826 implements MigrationInterface {
++  public readonly name = 'CustomerProfile20250927170826';
++
++  public async up(queryRunner: QueryRunner): Promise<void> {
++    await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "pgcrypto"');
++    await queryRunner.query(
++      "CREATE TYPE \"customer_profile_phone_numbers_type_enum\" AS ENUM ('mobile','home','work','other')",
++    );
++    await queryRunner.query(
++      `CREATE TABLE "customer_profiles" (
++        "id" uuid NOT NULL DEFAULT gen_random_uuid(),
++        "first_name" text NOT NULL,
++        "middle_name" text,
++        "last_name" text NOT NULL,
++        "marketing_emails_enabled" boolean NOT NULL,
++        "two_factor_enabled" boolean NOT NULL,
++        CONSTRAINT "pk_customer_profiles" PRIMARY KEY ("id")
++      )`,
++    );
++    await queryRunner.query(
++      `CREATE TABLE "customer_profile_addresses" (
++        "customer_profile_id" uuid NOT NULL,
++        "line1" text NOT NULL,
++        "line2" text,
++        "city" text NOT NULL,
++        "state" text NOT NULL,
++        "postal_code" text NOT NULL,
++        "country" character varying(2) NOT NULL,
++        CONSTRAINT "pk_customer_profile_addresses" PRIMARY KEY ("customer_profile_id"),
++        CONSTRAINT "fk_customer_profile_addresses__customer_profiles__customer_profile_id"
++          FOREIGN KEY ("customer_profile_id")
++          REFERENCES "customer_profiles"("id")
++          ON DELETE CASCADE
++      )`,
++    );
++    await queryRunner.query(
++      `CREATE TABLE "customer_profile_emails" (
++        "id" BIGSERIAL NOT NULL,
++        "customer_profile_id" uuid NOT NULL,
++        "email" character varying(320) NOT NULL,
++        CONSTRAINT "pk_customer_profile_emails" PRIMARY KEY ("id"),
++        CONSTRAINT "uq_customer_profile_emails__customer_profile_id__email"
++          UNIQUE ("customer_profile_id", "email"),
++        CONSTRAINT "fk_customer_profile_emails__customer_profiles__customer_profile_id"
++          FOREIGN KEY ("customer_profile_id")
++          REFERENCES "customer_profiles"("id")
++          ON DELETE CASCADE
++      )`,
++    );
++    await queryRunner.query(
++      `CREATE INDEX "ix_customer_profile_emails__customer_profile_id"
++        ON "customer_profile_emails" ("customer_profile_id")`,
++    );
++    await queryRunner.query(
++      `CREATE TABLE "customer_profile_phone_numbers" (
++        "id" BIGSERIAL NOT NULL,
++        "customer_profile_id" uuid NOT NULL,
++        "type" "customer_profile_phone_numbers_type_enum" NOT NULL,
++        "number" character varying(16) NOT NULL,
++        CONSTRAINT "pk_customer_profile_phone_numbers" PRIMARY KEY ("id"),
++        CONSTRAINT "fk_customer_profile_phone_numbers__customer_profiles__customer_profile_id"
++          FOREIGN KEY ("customer_profile_id")
++          REFERENCES "customer_profiles"("id")
++          ON DELETE CASCADE
++      )`,
++    );
++    await queryRunner.query(
++      `CREATE INDEX "ix_customer_profile_phone_numbers__customer_profile_id"
++        ON "customer_profile_phone_numbers" ("customer_profile_id")`,
++    );
++  }
++
++  public async down(queryRunner: QueryRunner): Promise<void> {
++    await queryRunner.query(
++      'DROP INDEX IF EXISTS "ix_customer_profile_phone_numbers__customer_profile_id"',
++    );
++    await queryRunner.query('DROP TABLE IF EXISTS "customer_profile_phone_numbers"');
++    await queryRunner.query(
++      'DROP INDEX IF EXISTS "ix_customer_profile_emails__customer_profile_id"',
++    );
++    await queryRunner.query('DROP TABLE IF EXISTS "customer_profile_emails"');
++    await queryRunner.query('DROP TABLE IF EXISTS "customer_profile_addresses"');
++    await queryRunner.query('DROP TABLE IF EXISTS "customer_profiles"');
++    await queryRunner.query('DROP TYPE IF EXISTS "customer_profile_phone_numbers_type_enum"');
++  }
++}
+diff --git a/changelog.md b/changelog.md
+index d31e4c0..6d3fcfd 100644
+--- a/changelog.md
++++ b/changelog.md
+@@ -4,3 +4,8 @@
+ - Scaffolded NestJS API with configuration validation and developer tooling.
+ - Added health check module with unit and E2E coverage plus REST client scripts.
+ - Implemented structured logging with request correlation and latency metrics.
++
++## Turn 2 – 2025-09-27 17:08:26 UTC
++- Added TypeORM data-source configuration with environment validation and glob discovery.
++- Generated customer profile migration with normalized tables, enums, and indexes.
++- Created customer domain entities and migration runbook documentation.
