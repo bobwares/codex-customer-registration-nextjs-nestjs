@@ -1,0 +1,18 @@
+# App: Customer Registration
+# Package: api
+# File: .gitignore
+# Version: 0.1.0
+# Turns: 1
+# Author: Codex Agent
+# Date: 2025-09-27T14:26:25Z
+# Exports: ignore rules
+# Description: Ignore build outputs, dependencies, environment files, and coverage artifacts.
+/node_modules
+/dist
+/.env
+/coverage
+/.tsbuildinfo
+.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
