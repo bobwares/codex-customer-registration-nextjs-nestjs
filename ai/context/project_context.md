@@ -24,4 +24,4 @@
 - REST API Response Schema
   load ./schemas/customer.schema.json
 - Persisted Data schema
-  load ./schemas/customer.schema.json
+  load ./schemas/customer-entity-schema.json
