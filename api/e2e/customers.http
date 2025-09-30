@@ -1,0 +1,67 @@
+### Customer CRUD smoke tests
+
+# @name createCustomer
+POST http://localhost:3000/customers
+Content-Type: application/json
+
+{
+  "id": "{{$guid}}",
+  "firstName": "Grace",
+  "lastName": "Hopper",
+  "emails": ["grace.hopper@example.com"],
+  "phoneNumbers": [
+    {
+      "type": "mobile",
+      "number": "+15551234567"
+    }
+  ],
+  "address": {
+    "line1": "1701 Innovation Way",
+    "city": "Arlington",
+    "state": "VA",
+    "postalCode": "22201",
+    "country": "US"
+  },
+  "privacySettings": {
+    "marketingEmailsEnabled": true,
+    "twoFactorEnabled": true
+  }
+}
+
+###
+
+# @name listCustomers
+GET http://localhost:3000/customers
+Accept: application/json
+
+###
+
+# @name getCustomer
+GET http://localhost:3000/customers/{{createCustomer.response.body.$.id}}
+Accept: application/json
+
+###
+
+# @name updateCustomer
+PUT http://localhost:3000/customers/{{createCustomer.response.body.$.id}}
+Content-Type: application/json
+
+{
+  "firstName": "Grace",
+  "lastName": "Murray Hopper",
+  "privacySettings": {
+    "marketingEmailsEnabled": false,
+    "twoFactorEnabled": true
+  }
+}
+
+###
+
+# @name deleteCustomer
+DELETE http://localhost:3000/customers/{{createCustomer.response.body.$.id}}
+
+###
+
+# @name openApi
+GET http://localhost:3000/api/openapi.json
+Accept: application/json

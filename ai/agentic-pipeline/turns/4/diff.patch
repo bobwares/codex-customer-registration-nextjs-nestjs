@@ -1,0 +1,703 @@
+diff --git a/ai/agentic-pipeline/turns/4/diff.patch b/ai/agentic-pipeline/turns/4/diff.patch
+index d55ef16..e69de29 100644
+--- a/ai/agentic-pipeline/turns/4/diff.patch
++++ b/ai/agentic-pipeline/turns/4/diff.patch
+@@ -1,664 +0,0 @@
+-diff --git a/ai/agentic-pipeline/turns/index.csv b/ai/agentic-pipeline/turns/index.csv
+-index f8217f7..8d33c75 100644
+---- a/ai/agentic-pipeline/turns/index.csv
+-+++ b/ai/agentic-pipeline/turns/index.csv
+-@@ -2,3 +2,4 @@ turnId,timestampUtc,task,branch,tag,testsPassed,testsFailed
+- 1,2025-09-30T16:45:58Z,execute turn 1,,,3,1
+- 2,2025-09-30T17:15:00Z,execute turn 2,,,0,0
+- 3,2025-09-30T17:40:00Z,execute turn 3,,,0,0
+-+4,2025-09-30T18:10:00Z,execute turn 4,,,21,0
+-diff --git a/api/package-lock.json b/api/package-lock.json
+-index 7514897..b1eb858 100644
+---- a/api/package-lock.json
+-+++ b/api/package-lock.json
+-@@ -41,13 +41,15 @@
+-         "eslint": "^9.28.0",
+-         "eslint-config-prettier": "^10.1.5",
+-         "eslint-plugin-prettier": "^5.4.1",
+-+        "pg-mem": "^3.0.5",
+-         "prettier": "^3.5.3",
+-         "source-map-support": "^0.5.21",
+-         "supertest": "^7.1.1",
+-         "ts-jest": "^29.3.4",
+-         "ts-loader": "^9.5.2",
+-         "ts-node": "^10.9.2",
+--        "typescript": "^5.8.3"
+-+        "typescript": "^5.8.3",
+-+        "yaml": "^2.7.0"
+-       }
+-     },
+-     "node_modules/@angular-devkit/core": {
+-@@ -5191,6 +5193,13 @@
+-         "node": "^14.15.0 || ^16.10.0 || >=18.0.0"
+-       }
+-     },
+-+    "node_modules/discontinuous-range": {
+-+      "version": "1.0.0",
+-+      "resolved": "https://registry.npmjs.org/discontinuous-range/-/discontinuous-range-1.0.0.tgz",
+-+      "integrity": "sha512-c68LpLbO+7kP/b1Hr1qs8/BJ09F5khZGTxqxZuhzxpmwJKOgRFHJWIb9/KmqnqHhLdO55aOxFH/EGBvUQbL/RQ==",
+-+      "dev": true,
+-+      "license": "MIT"
+-+    },
+-     "node_modules/dotenv": {
+-       "version": "16.4.7",
+-       "resolved": "https://registry.npmjs.org/dotenv/-/dotenv-16.4.7.tgz",
+-@@ -6254,6 +6263,13 @@
+-         "url": "https://github.com/sponsors/ljharb"
+-       }
+-     },
+-+    "node_modules/functional-red-black-tree": {
+-+      "version": "1.0.1",
+-+      "resolved": "https://registry.npmjs.org/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz",
+-+      "integrity": "sha512-dsKNQNdj6xA3T+QlADDA7mOSlX0qiMINjn0cgr+eGHGsbSHzTabcIogz2+p/iqP1Xs6EP/sS2SbqH+brGTbq0g==",
+-+      "dev": true,
+-+      "license": "MIT"
+-+    },
+-     "node_modules/gensync": {
+-       "version": "1.0.0-beta.2",
+-       "resolved": "https://registry.npmjs.org/gensync/-/gensync-1.0.0-beta.2.tgz",
+-@@ -6628,6 +6644,13 @@
+-         "node": ">= 4"
+-       }
+-     },
+-+    "node_modules/immutable": {
+-+      "version": "4.3.7",
+-+      "resolved": "https://registry.npmjs.org/immutable/-/immutable-4.3.7.tgz",
+-+      "integrity": "sha512-1hqclzwYwjRDFLjcFxOM5AYkkG0rpFPpr1RLPMEuGczoS7YA8gLhy8SWXYRAA/XwfEHpfo3cw5JGioS32fnMRw==",
+-+      "dev": true,
+-+      "license": "MIT"
+-+    },
+-     "node_modules/import-fresh": {
+-       "version": "3.3.1",
+-       "resolved": "https://registry.npmjs.org/import-fresh/-/import-fresh-3.3.1.tgz",
+-@@ -8580,6 +8603,26 @@
+-       "dev": true,
+-       "license": "MIT"
+-     },
+-+    "node_modules/json-stable-stringify": {
+-+      "version": "1.3.0",
+-+      "resolved": "https://registry.npmjs.org/json-stable-stringify/-/json-stable-stringify-1.3.0.tgz",
+-+      "integrity": "sha512-qtYiSSFlwot9XHtF9bD9c7rwKjr+RecWT//ZnPvSmEjpV5mmPOCN4j8UjY5hbjNkOwZ/jQv3J6R1/pL7RwgMsg==",
+-+      "dev": true,
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "call-bind": "^1.0.8",
+-+        "call-bound": "^1.0.4",
+-+        "isarray": "^2.0.5",
+-+        "jsonify": "^0.0.1",
+-+        "object-keys": "^1.1.1"
+-+      },
+-+      "engines": {
+-+        "node": ">= 0.4"
+-+      },
+-+      "funding": {
+-+        "url": "https://github.com/sponsors/ljharb"
+-+      }
+-+    },
+-     "node_modules/json-stable-stringify-without-jsonify": {
+-       "version": "1.0.1",
+-       "resolved": "https://registry.npmjs.org/json-stable-stringify-without-jsonify/-/json-stable-stringify-without-jsonify-1.0.1.tgz",
+-@@ -8620,6 +8663,16 @@
+-         "graceful-fs": "^4.1.6"
+-       }
+-     },
+-+    "node_modules/jsonify": {
+-+      "version": "0.0.1",
+-+      "resolved": "https://registry.npmjs.org/jsonify/-/jsonify-0.0.1.tgz",
+-+      "integrity": "sha512-2/Ki0GcmuqSrgFyelQq9M05y7PS0mEwuIzrf3f1fPqkVDVRvZrPZtVSMHxdgo8Aq0sxAOb/cr2aqqA3LeWHVPg==",
+-+      "dev": true,
+-+      "license": "Public Domain",
+-+      "funding": {
+-+        "url": "https://github.com/sponsors/ljharb"
+-+      }
+-+    },
+-     "node_modules/keyv": {
+-       "version": "4.5.4",
+-       "resolved": "https://registry.npmjs.org/keyv/-/keyv-4.5.4.tgz",
+-@@ -8992,6 +9045,23 @@
+-         "mkdirp": "bin/cmd.js"
+-       }
+-     },
+-+    "node_modules/moment": {
+-+      "version": "2.30.1",
+-+      "resolved": "https://registry.npmjs.org/moment/-/moment-2.30.1.tgz",
+-+      "integrity": "sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==",
+-+      "dev": true,
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": "*"
+-+      }
+-+    },
+-+    "node_modules/moo": {
+-+      "version": "0.5.2",
+-+      "resolved": "https://registry.npmjs.org/moo/-/moo-0.5.2.tgz",
+-+      "integrity": "sha512-iSAJLHYKnX41mKcJKjqvnAN9sf0LMDTXDEvFv+ffuRR9a1MIuXLjMNL6EsnDHSkKLTWNqQQ5uo61P4EbU4NU+Q==",
+-+      "dev": true,
+-+      "license": "BSD-3-Clause"
+-+    },
+-     "node_modules/ms": {
+-       "version": "2.1.3",
+-       "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+-@@ -9093,6 +9163,36 @@
+-       "dev": true,
+-       "license": "MIT"
+-     },
+-+    "node_modules/nearley": {
+-+      "version": "2.20.1",
+-+      "resolved": "https://registry.npmjs.org/nearley/-/nearley-2.20.1.tgz",
+-+      "integrity": "sha512-+Mc8UaAebFzgV+KpI5n7DasuuQCHA89dmwm7JXw3TV43ukfNQ9DnBH3Mdb2g/I4Fdxc26pwimBWvjIw0UAILSQ==",
+-+      "dev": true,
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "commander": "^2.19.0",
+-+        "moo": "^0.5.0",
+-+        "railroad-diagrams": "^1.0.0",
+-+        "randexp": "0.4.6"
+-+      },
+-+      "bin": {
+-+        "nearley-railroad": "bin/nearley-railroad.js",
+-+        "nearley-test": "bin/nearley-test.js",
+-+        "nearley-unparse": "bin/nearley-unparse.js",
+-+        "nearleyc": "bin/nearleyc.js"
+-+      },
+-+      "funding": {
+-+        "type": "individual",
+-+        "url": "https://nearley.js.org/#give-to-nearley"
+-+      }
+-+    },
+-+    "node_modules/nearley/node_modules/commander": {
+-+      "version": "2.20.3",
+-+      "resolved": "https://registry.npmjs.org/commander/-/commander-2.20.3.tgz",
+-+      "integrity": "sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==",
+-+      "dev": true,
+-+      "license": "MIT"
+-+    },
+-     "node_modules/negotiator": {
+-       "version": "1.0.0",
+-       "resolved": "https://registry.npmjs.org/negotiator/-/negotiator-1.0.0.tgz",
+-@@ -9175,6 +9275,16 @@
+-         "node": ">=0.10.0"
+-       }
+-     },
+-+    "node_modules/object-hash": {
+-+      "version": "2.2.0",
+-+      "resolved": "https://registry.npmjs.org/object-hash/-/object-hash-2.2.0.tgz",
+-+      "integrity": "sha512-gScRMn0bS5fH+IuwyIFgnh9zBdo4DV+6GhygmWM9HyNJSgS0hScp1f5vjtm7oIIOiT9trXrShAkLFSc2IqKNgw==",
+-+      "dev": true,
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 6"
+-+      }
+-+    },
+-     "node_modules/object-inspect": {
+-       "version": "1.13.4",
+-       "resolved": "https://registry.npmjs.org/object-inspect/-/object-inspect-1.13.4.tgz",
+-@@ -9187,6 +9297,16 @@
+-         "url": "https://github.com/sponsors/ljharb"
+-       }
+-     },
+-+    "node_modules/object-keys": {
+-+      "version": "1.1.1",
+-+      "resolved": "https://registry.npmjs.org/object-keys/-/object-keys-1.1.1.tgz",
+-+      "integrity": "sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==",
+-+      "dev": true,
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">= 0.4"
+-+      }
+-+    },
+-     "node_modules/on-finished": {
+-       "version": "2.4.1",
+-       "resolved": "https://registry.npmjs.org/on-finished/-/on-finished-2.4.1.tgz",
+-@@ -9504,6 +9624,85 @@
+-         "node": ">=4.0.0"
+-       }
+-     },
+-+    "node_modules/pg-mem": {
+-+      "version": "3.0.5",
+-+      "resolved": "https://registry.npmjs.org/pg-mem/-/pg-mem-3.0.5.tgz",
+-+      "integrity": "sha512-Bh8xHD6u/wUXCoyFE2vyRs5pgaKbqjWFQowKDlbKWCiF0vOlo2A0PZdiUxmf2PKgb6Vb6C7gwAlA7jKvsfDHZA==",
+-+      "dev": true,
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "functional-red-black-tree": "^1.0.1",
+-+        "immutable": "^4.3.4",
+-+        "json-stable-stringify": "^1.0.1",
+-+        "lru-cache": "^6.0.0",
+-+        "moment": "^2.27.0",
+-+        "object-hash": "^2.0.3",
+-+        "pgsql-ast-parser": "^12.0.1"
+-+      },
+-+      "peerDependencies": {
+-+        "@mikro-orm/core": ">=4.5.3",
+-+        "@mikro-orm/postgresql": ">=4.5.3",
+-+        "knex": ">=0.20",
+-+        "kysely": ">=0.26",
+-+        "pg-promise": ">=10.8.7",
+-+        "pg-server": "^0.1.5",
+-+        "postgres": "^3.4.4",
+-+        "slonik": ">=23.0.1",
+-+        "typeorm": ">=0.2.29"
+-+      },
+-+      "peerDependenciesMeta": {
+-+        "@mikro-orm/core": {
+-+          "optional": true
+-+        },
+-+        "@mikro-orm/postgresql": {
+-+          "optional": true
+-+        },
+-+        "knex": {
+-+          "optional": true
+-+        },
+-+        "kysely": {
+-+          "optional": true
+-+        },
+-+        "mikro-orm": {
+-+          "optional": true
+-+        },
+-+        "pg-promise": {
+-+          "optional": true
+-+        },
+-+        "pg-server": {
+-+          "optional": true
+-+        },
+-+        "postgres": {
+-+          "optional": true
+-+        },
+-+        "slonik": {
+-+          "optional": true
+-+        },
+-+        "typeorm": {
+-+          "optional": true
+-+        }
+-+      }
+-+    },
+-+    "node_modules/pg-mem/node_modules/lru-cache": {
+-+      "version": "6.0.0",
+-+      "resolved": "https://registry.npmjs.org/lru-cache/-/lru-cache-6.0.0.tgz",
+-+      "integrity": "sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==",
+-+      "dev": true,
+-+      "license": "ISC",
+-+      "dependencies": {
+-+        "yallist": "^4.0.0"
+-+      },
+-+      "engines": {
+-+        "node": ">=10"
+-+      }
+-+    },
+-+    "node_modules/pg-mem/node_modules/yallist": {
+-+      "version": "4.0.0",
+-+      "resolved": "https://registry.npmjs.org/yallist/-/yallist-4.0.0.tgz",
+-+      "integrity": "sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==",
+-+      "dev": true,
+-+      "license": "ISC"
+-+    },
+-     "node_modules/pg-pool": {
+-       "version": "3.10.1",
+-       "resolved": "https://registry.npmjs.org/pg-pool/-/pg-pool-3.10.1.tgz",
+-@@ -9544,6 +9743,17 @@
+-         "split2": "^4.1.0"
+-       }
+-     },
+-+    "node_modules/pgsql-ast-parser": {
+-+      "version": "12.0.1",
+-+      "resolved": "https://registry.npmjs.org/pgsql-ast-parser/-/pgsql-ast-parser-12.0.1.tgz",
+-+      "integrity": "sha512-pe8C6Zh5MsS+o38WlSu18NhrTjAv1UNMeDTs2/Km2ZReZdYBYtwtbWGZKK2BM2izv5CrQpbmP0oI10wvHOwv4A==",
+-+      "dev": true,
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "moo": "^0.5.1",
+-+        "nearley": "^2.19.5"
+-+      }
+-+    },
+-     "node_modules/picocolors": {
+-       "version": "1.1.1",
+-       "resolved": "https://registry.npmjs.org/picocolors/-/picocolors-1.1.1.tgz",
+-@@ -9877,6 +10087,27 @@
+-       ],
+-       "license": "MIT"
+-     },
+-+    "node_modules/railroad-diagrams": {
+-+      "version": "1.0.0",
+-+      "resolved": "https://registry.npmjs.org/railroad-diagrams/-/railroad-diagrams-1.0.0.tgz",
+-+      "integrity": "sha512-cz93DjNeLY0idrCNOH6PviZGRN9GJhsdm9hpn1YCS879fj4W+x5IFJhhkRZcwVgMmFF7R82UA/7Oh+R8lLZg6A==",
+-+      "dev": true,
+-+      "license": "CC0-1.0"
+-+    },
+-+    "node_modules/randexp": {
+-+      "version": "0.4.6",
+-+      "resolved": "https://registry.npmjs.org/randexp/-/randexp-0.4.6.tgz",
+-+      "integrity": "sha512-80WNmd9DA0tmZrw9qQa62GPPWfuXJknrmVmLcxvq4uZBdYqb1wYoKTmnlGUchvVWe0XiLupYkBoXVOxz3C8DYQ==",
+-+      "dev": true,
+-+      "license": "MIT",
+-+      "dependencies": {
+-+        "discontinuous-range": "1.0.0",
+-+        "ret": "~0.1.10"
+-+      },
+-+      "engines": {
+-+        "node": ">=0.12"
+-+      }
+-+    },
+-     "node_modules/randombytes": {
+-       "version": "2.1.0",
+-       "resolved": "https://registry.npmjs.org/randombytes/-/randombytes-2.1.0.tgz",
+-@@ -10037,6 +10268,16 @@
+-       "dev": true,
+-       "license": "ISC"
+-     },
+-+    "node_modules/ret": {
+-+      "version": "0.1.15",
+-+      "resolved": "https://registry.npmjs.org/ret/-/ret-0.1.15.tgz",
+-+      "integrity": "sha512-TTlYpa+OL+vMMNG24xSlQGEJ3B/RzEfUlLct7b5G/ytav+wPrplCpVMFuwzXbkecJrb6IYo1iFb0S9v37754mg==",
+-+      "dev": true,
+-+      "license": "MIT",
+-+      "engines": {
+-+        "node": ">=0.12"
+-+      }
+-+    },
+-     "node_modules/reusify": {
+-       "version": "1.1.0",
+-       "resolved": "https://registry.npmjs.org/reusify/-/reusify-1.1.0.tgz",
+-@@ -10458,6 +10699,14 @@
+-         "node": ">=14"
+-       }
+-     },
+-+    "node_modules/sql.js": {
+-+      "version": "1.13.0",
+-+      "resolved": "https://registry.npmjs.org/sql.js/-/sql.js-1.13.0.tgz",
+-+      "integrity": "sha512-RJbVP1HRDlUUXahJ7VMTcu9Rm1Nzw+EBpoPr94vnbD4LwR715F3CcxE2G2k45PewcaZ57pjetYa+LoSJLAASgA==",
+-+      "license": "MIT",
+-+      "optional": true,
+-+      "peer": true
+-+    },
+-     "node_modules/stack-utils": {
+-       "version": "2.0.6",
+-       "resolved": "https://registry.npmjs.org/stack-utils/-/stack-utils-2.0.6.tgz",
+-@@ -12122,6 +12371,19 @@
+-       "license": "ISC",
+-       "peer": true
+-     },
+-+    "node_modules/yaml": {
+-+      "version": "2.8.1",
+-+      "resolved": "https://registry.npmjs.org/yaml/-/yaml-2.8.1.tgz",
+-+      "integrity": "sha512-lcYcMxX2PO9XMGvAJkJ3OsNMw+/7FKes7/hgerGUYWIoWu5j/+YQqcZr5JnPZWzOsEBgMbSbiSTn/dv/69Mkpw==",
+-+      "dev": true,
+-+      "license": "ISC",
+-+      "bin": {
+-+        "yaml": "bin.mjs"
+-+      },
+-+      "engines": {
+-+        "node": ">= 14.6"
+-+      }
+-+    },
+-     "node_modules/yargs": {
+-       "version": "17.7.2",
+-       "resolved": "https://registry.npmjs.org/yargs/-/yargs-17.7.2.tgz",
+-diff --git a/api/package.json b/api/package.json
+-index 31f138b..960a14e 100644
+---- a/api/package.json
+-+++ b/api/package.json
+-@@ -18,6 +18,7 @@
+-     "test:cov": "jest --coverage",
+-     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+-     "test:e2e": "jest --config ./test/jest-e2e.json",
+-+    "openapi:emit": "ts-node -r tsconfig-paths/register src/scripts/emit-openapi.ts",
+-     "db:validate": "dotenv -e ../ai/context/.env -e .env -- ts-node src/database/validate-connection.ts",
+-     "typeorm:migration:create": "dotenv -e ../ai/context/.env -e .env -- typeorm migration:create src/migrations/Manual",
+-     "migration:run": "npx ts-node -P ./tsconfig.json -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d ./src/database/data-source.ts",
+-@@ -54,6 +55,7 @@
+-     "@types/jest": "^29.5.14",
+-     "@types/node": "^22.15.30",
+-     "@types/supertest": "^6.0.3",
+-+    "pg-mem": "^3.0.5",
+-     "@typescript-eslint/eslint-plugin": "^8.33.1",
+-     "@typescript-eslint/parser": "^8.33.1",
+-     "dotenv-cli": "^7.3.0",
+-@@ -66,6 +68,7 @@
+-     "ts-jest": "^29.3.4",
+-     "ts-loader": "^9.5.2",
+-     "ts-node": "^10.9.2",
+--    "typescript": "^5.8.3"
+-+    "typescript": "^5.8.3",
+-+    "yaml": "^2.7.0"
+-   }
+- }
+-diff --git a/api/src/customer/customer.module.ts b/api/src/customer/customer.module.ts
+-index 3a9bda5..3b739a0 100644
+---- a/api/src/customer/customer.module.ts
+-+++ b/api/src/customer/customer.module.ts
+-@@ -2,19 +2,21 @@
+-  * # App: Customer Registration API
+-  * # Package: api/src/customer
+-  * # File: customer.module.ts
+-- * # Version: 0.1.0
+-- * # Turns: 3
+-+ * # Version: 0.2.0
+-+ * # Turns: 3,4
+-  * # Author: Codex Agent
+-- * # Date: 2025-09-30T17:20:00Z
+-+ * # Date: 2025-09-30T18:10:00Z
+-  * # Exports: CustomerModule
+-- * # Description: Nest module wiring customer persistence services and database bindings.
+-+ * # Description: Nest module wiring customer persistence services, controller, and database bindings.
+-  */
+- import { Module } from '@nestjs/common';
+- import { CustomerDatabaseModule } from './database/customer-database.module';
+- import { CustomerService } from './services/customer.service';
+-+import { CustomerController } from './controllers/customer.controller';
+- 
+- @Module({
+-   imports: [CustomerDatabaseModule],
+-+  controllers: [CustomerController],
+-   providers: [CustomerService],
+-   exports: [CustomerService, CustomerDatabaseModule],
+- })
+-diff --git a/api/src/main.ts b/api/src/main.ts
+-index e29d3fd..da79cc0 100644
+---- a/api/src/main.ts
+-+++ b/api/src/main.ts
+-@@ -2,20 +2,32 @@
+-  * # App: Customer Registration API
+-  * # Package: api/src
+-  * # File: main.ts
+-- * # Version: 0.1.0
+-+ * # Version: 0.2.0
+-+ * # Turns: 1,4
+-  * # Author: Codex Agent
+-- * # Date: 2025-09-30T16:46:37+00:00
+-- * # Description: Bootstraps the NestJS application, configuring logging, validation, and HTTP listener startup logic.
+-+ * # Date: 2025-09-30T18:10:00Z
+-+ * # Description: Bootstraps the NestJS application, configuring logging, validation, global HTTP error handling,
+-+ * #              and Swagger document exposure before starting the HTTP listener.
+-  * #
+-  * # Functions
+-  * # - bootstrap: Builds the NestJS application, applies structured logging and validation, and starts the HTTP server.
+-  */
+- import 'reflect-metadata';
+--import { LogLevel, ValidationPipe } from '@nestjs/common';
+--import { NestFactory } from '@nestjs/core';
+-+import { promises as fs } from 'node:fs';
+-+import * as path from 'node:path';
+-+import { HttpStatus, LogLevel, ValidationPipe } from '@nestjs/common';
+-+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
+-+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+- import { ConfigService } from '@nestjs/config';
+- import { AppModule } from './app.module';
+- import { JsonLogger } from './common/logging/json-logger.service';
+-+import { HttpExceptionFilter, ProblemDetail } from './common/http';
+-+import { ResponseCustomerDto } from './customer/dtos/response-customer.dto';
+-+import {
+-+  CustomerAddressDto,
+-+  CustomerPhoneNumberDto,
+-+  CustomerPrivacySettingsDto,
+-+} from './customer/dtos/create-customer.dto';
+- 
+- const LOG_LEVELS: LogLevel[] = ['error', 'warn', 'log', 'debug', 'verbose'];
+- 
+-@@ -39,9 +51,43 @@ async function bootstrap(): Promise<void> {
+-       whitelist: true,
+-       transform: true,
+-       forbidNonWhitelisted: true,
+-+      errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+-+      transformOptions: {
+-+        enableImplicitConversion: true,
+-+      },
+-     }),
+-   );
+- 
+-+  const httpAdapterHost = app.get(HttpAdapterHost);
+-+  app.useGlobalFilters(new HttpExceptionFilter(httpAdapterHost, jsonLogger));
+-+
+-+  const pkg = JSON.parse(
+-+    await fs.readFile(path.resolve(__dirname, '..', 'package.json'), 'utf8'),
+-+  ) as { version?: string };
+-+
+-+  const swaggerConfig = new DocumentBuilder()
+-+    .setTitle('Customer Registration API')
+-+    .setDescription('HTTP API for managing the customer onboarding lifecycle.')
+-+    .setVersion(pkg.version ?? '1.0.0')
+-+    .addTag('Customer')
+-+    .build();
+-+
+-+  const document = SwaggerModule.createDocument(app, swaggerConfig, {
+-+    extraModels: [
+-+      ProblemDetail,
+-+      ResponseCustomerDto,
+-+      CustomerAddressDto,
+-+      CustomerPhoneNumberDto,
+-+      CustomerPrivacySettingsDto,
+-+    ],
+-+    deepScanRoutes: true,
+-+  });
+-+
+-+  SwaggerModule.setup('api/docs', app, document, {
+-+    jsonDocumentUrl: '/api/openapi.json',
+-+    yamlDocumentUrl: '/api/openapi.yaml',
+-+  });
+-+
+-   const configService = app.get(ConfigService);
+-   const port = configService.get<number>('app.port', 3000);
+- 
+-diff --git a/api/test/health.e2e-spec.ts b/api/test/health.e2e-spec.ts
+-index 5e1f831..ae05b8c 100644
+---- a/api/test/health.e2e-spec.ts
+-+++ b/api/test/health.e2e-spec.ts
+-@@ -2,9 +2,10 @@
+-  * # App: Customer Registration API
+-  * # Package: api/test
+-  * # File: health.e2e-spec.ts
+-- * # Version: 0.1.0
+-+ * # Version: 0.2.0
+-+ * # Turns: 1,4
+-  * # Author: Codex Agent
+-- * # Date: 2025-09-30T16:46:37+00:00
+-+ * # Date: 2025-09-30T18:10:00Z
+-  * # Description: End-to-end tests verifying health endpoints respond with expected payloads.
+-  * #
+-  * # Test Suites
+-@@ -13,23 +14,14 @@
+- import { INestApplication } from '@nestjs/common';
+- import { Test } from '@nestjs/testing';
+- import * as request from 'supertest';
+--
+--const REQUIRED_ENV = {
+--  DATABASE_HOST: '127.0.0.1',
+--  DATABASE_USER: 'postgres',
+--  DATABASE_PASSWORD: 'postgres',
+--  DATABASE_NAME: 'appdb',
+--};
+-+import { HealthModule } from '../src/health/health.module';
+- 
+- describe('Health E2E', () => {
+-   let app: INestApplication;
+- 
+-   beforeAll(async () => {
+--    Object.assign(process.env, REQUIRED_ENV);
+--
+--    const { AppModule } = await import('../src/app.module');
+-     const moduleRef = await Test.createTestingModule({
+--      imports: [AppModule],
+-+      imports: [HealthModule],
+-     }).compile();
+- 
+-     app = moduleRef.createNestApplication();
+-@@ -38,7 +30,6 @@ describe('Health E2E', () => {
+- 
+-   afterAll(async () => {
+-     await app.close();
+--    Object.keys(REQUIRED_ENV).forEach((key) => delete process.env[key]);
+-   });
+- 
+-   it('/health (GET) -> 200', async () => {
+-diff --git a/api/test/logging.e2e-spec.ts b/api/test/logging.e2e-spec.ts
+-index 7313263..391d187 100644
+---- a/api/test/logging.e2e-spec.ts
+-+++ b/api/test/logging.e2e-spec.ts
+-@@ -2,9 +2,10 @@
+-  * # App: Customer Registration API
+-  * # Package: api/test
+-  * # File: logging.e2e-spec.ts
+-- * # Version: 0.1.0
+-+ * # Version: 0.2.0
+-+ * # Turns: 1,4
+-  * # Author: Codex Agent
+-- * # Date: 2025-09-30T16:46:37+00:00
+-+ * # Date: 2025-09-30T18:10:00Z
+-  * # Description: Validates structured logging emits JSON lines with request identifiers and latency metadata.
+-  * #
+-  * # Test Suites
+-@@ -13,14 +14,11 @@
+- import { INestApplication, LogLevel, ValidationPipe } from '@nestjs/common';
+- import { Test } from '@nestjs/testing';
+- import * as request from 'supertest';
+-+import { APP_INTERCEPTOR } from '@nestjs/core';
+- import { JsonLogger } from '../src/common/logging/json-logger.service';
+--
+--const REQUIRED_ENV = {
+--  DATABASE_HOST: '127.0.0.1',
+--  DATABASE_USER: 'postgres',
+--  DATABASE_PASSWORD: 'postgres',
+--  DATABASE_NAME: 'appdb',
+--};
+-+import { LoggingInterceptor } from '../src/common/logging/logging.interceptor';
+-+import { RequestIdMiddleware } from '../src/common/logging/request-id.middleware';
+-+import { HealthModule } from '../src/health/health.module';
+- 
+- const LOG_LEVELS: LogLevel[] = ['error', 'warn', 'log', 'debug', 'verbose'];
+- 
+-@@ -32,11 +30,16 @@ describe('Logging E2E', () => {
+-   beforeAll(async () => {
+-     process.env.LOG_FORMAT = 'json';
+-     process.env.LOG_LEVEL = 'log';
+--    Object.assign(process.env, REQUIRED_ENV);
+- 
+--    const { AppModule } = await import('../src/app.module');
+-     const moduleRef = await Test.createTestingModule({
+--      imports: [AppModule],
+-+      imports: [HealthModule],
+-+      providers: [
+-+        JsonLogger,
+-+        {
+-+          provide: APP_INTERCEPTOR,
+-+          useClass: LoggingInterceptor,
+-+        },
+-+      ],
+-     }).compile();
+- 
+-     app = moduleRef.createNestApplication();
+-@@ -44,6 +47,8 @@ describe('Logging E2E', () => {
+-     const jsonLogger = app.get(JsonLogger);
+-     jsonLogger.configure(LOG_LEVELS);
+-     app.useLogger(jsonLogger);
+-+    const requestIdMiddleware = new RequestIdMiddleware();
+-+    app.use(requestIdMiddleware.use.bind(requestIdMiddleware));
+-     app.useGlobalPipes(
+-       new ValidationPipe({
+-         whitelist: true,
+-@@ -59,7 +64,6 @@ describe('Logging E2E', () => {
+-     await app.close();
+-     delete process.env.LOG_FORMAT;
+-     delete process.env.LOG_LEVEL;
+--    Object.keys(REQUIRED_ENV).forEach((key) => delete process.env[key]);
+-   });
+- 
+-   beforeEach(() => {
+diff --git a/ai/agentic-pipeline/turns/4/manifest.json b/ai/agentic-pipeline/turns/4/manifest.json
+index 5eb1f21..4d4bb82 100644
+--- a/ai/agentic-pipeline/turns/4/manifest.json
++++ b/ai/agentic-pipeline/turns/4/manifest.json
+@@ -17,6 +17,7 @@
+       "api/src/common/http/http-exception.filter.ts",
+       "api/src/common/http/index.ts",
+       "api/src/common/http/problem-detail.ts",
++      "api/src/customer/controllers/customer.controller.spec.ts",
+       "api/src/customer/controllers/customer.controller.ts",
+       "api/src/customer/dtos/create-customer.dto.ts",
+       "api/src/customer/dtos/create-customer.dto.spec.ts",
+diff --git a/api/src/customer/controllers/customer.controller.spec.ts b/api/src/customer/controllers/customer.controller.spec.ts
+index 92fff5f..7034b55 100644
+--- a/api/src/customer/controllers/customer.controller.spec.ts
++++ b/api/src/customer/controllers/customer.controller.spec.ts
+@@ -1,3 +1,17 @@
++/**
++ * # App: Customer Registration API
++ * # Package: api/src/customer/controllers
++ * # File: customer.controller.spec.ts
++ * # Version: 0.1.0
++ * # Turns: 4
++ * # Author: Codex Agent
++ * # Date: 2025-09-30T18:10:00Z
++ * # Description: Unit tests verifying the customer controller orchestrates CRUD flows and error handling in
++ * #              concert with the customer service.
++ * #
++ * # Test Suites
++ * # - CustomerController: Covers list, read, create, update, and delete scenarios with success and 404 cases.
++ */
+ import { Test } from '@nestjs/testing';
+ import { NotFoundException } from '@nestjs/common';
+ import { CustomerController } from './customer.controller';

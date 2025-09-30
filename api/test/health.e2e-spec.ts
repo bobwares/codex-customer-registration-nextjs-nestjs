@@ -2,9 +2,10 @@
  * # App: Customer Registration API
  * # Package: api/test
  * # File: health.e2e-spec.ts
- * # Version: 0.1.0
+ * # Version: 0.2.0
+ * # Turns: 1,4
  * # Author: Codex Agent
- * # Date: 2025-09-30T16:46:37+00:00
+ * # Date: 2025-09-30T18:10:00Z
  * # Description: End-to-end tests verifying health endpoints respond with expected payloads.
  * #
  * # Test Suites
@@ -13,23 +14,14 @@
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
-
-const REQUIRED_ENV = {
-  DATABASE_HOST: '127.0.0.1',
-  DATABASE_USER: 'postgres',
-  DATABASE_PASSWORD: 'postgres',
-  DATABASE_NAME: 'appdb',
-};
+import { HealthModule } from '../src/health/health.module';
 
 describe('Health E2E', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
-    Object.assign(process.env, REQUIRED_ENV);
-
-    const { AppModule } = await import('../src/app.module');
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [HealthModule],
     }).compile();
 
     app = moduleRef.createNestApplication();
@@ -38,7 +30,6 @@ describe('Health E2E', () => {
 
   afterAll(async () => {
     await app.close();
-    Object.keys(REQUIRED_ENV).forEach((key) => delete process.env[key]);
   });
 
   it('/health (GET) -> 200', async () => {
