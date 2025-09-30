@@ -2,9 +2,10 @@
  * # App: Customer Registration API
  * # Package: api/test
  * # File: logging.e2e-spec.ts
- * # Version: 0.1.0
+ * # Version: 0.2.0
+ * # Turns: 1,4
  * # Author: Codex Agent
- * # Date: 2025-09-30T16:46:37+00:00
+ * # Date: 2025-09-30T18:10:00Z
  * # Description: Validates structured logging emits JSON lines with request identifiers and latency metadata.
  * #
  * # Test Suites
@@ -13,14 +14,11 @@
 import { INestApplication, LogLevel, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { JsonLogger } from '../src/common/logging/json-logger.service';
-
-const REQUIRED_ENV = {
-  DATABASE_HOST: '127.0.0.1',
-  DATABASE_USER: 'postgres',
-  DATABASE_PASSWORD: 'postgres',
-  DATABASE_NAME: 'appdb',
-};
+import { LoggingInterceptor } from '../src/common/logging/logging.interceptor';
+import { RequestIdMiddleware } from '../src/common/logging/request-id.middleware';
+import { HealthModule } from '../src/health/health.module';
 
 const LOG_LEVELS: LogLevel[] = ['error', 'warn', 'log', 'debug', 'verbose'];
 
@@ -32,11 +30,16 @@ describe('Logging E2E', () => {
   beforeAll(async () => {
     process.env.LOG_FORMAT = 'json';
     process.env.LOG_LEVEL = 'log';
-    Object.assign(process.env, REQUIRED_ENV);
 
-    const { AppModule } = await import('../src/app.module');
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [HealthModule],
+      providers: [
+        JsonLogger,
+        {
+          provide: APP_INTERCEPTOR,
+          useClass: LoggingInterceptor,
+        },
+      ],
     }).compile();
 
     app = moduleRef.createNestApplication();
@@ -44,6 +47,8 @@ describe('Logging E2E', () => {
     const jsonLogger = app.get(JsonLogger);
     jsonLogger.configure(LOG_LEVELS);
     app.useLogger(jsonLogger);
+    const requestIdMiddleware = new RequestIdMiddleware();
+    app.use(requestIdMiddleware.use.bind(requestIdMiddleware));
     app.useGlobalPipes(
       new ValidationPipe({
         whitelist: true,
@@ -59,7 +64,6 @@ describe('Logging E2E', () => {
     await app.close();
     delete process.env.LOG_FORMAT;
     delete process.env.LOG_LEVEL;
-    Object.keys(REQUIRED_ENV).forEach((key) => delete process.env[key]);
   });
 
   beforeEach(() => {

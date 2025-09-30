@@ -2,20 +2,32 @@
  * # App: Customer Registration API
  * # Package: api/src
  * # File: main.ts
- * # Version: 0.1.0
+ * # Version: 0.2.0
+ * # Turns: 1,4
  * # Author: Codex Agent
- * # Date: 2025-09-30T16:46:37+00:00
- * # Description: Bootstraps the NestJS application, configuring logging, validation, and HTTP listener startup logic.
+ * # Date: 2025-09-30T18:10:00Z
+ * # Description: Bootstraps the NestJS application, configuring logging, validation, global HTTP error handling,
+ * #              and Swagger document exposure before starting the HTTP listener.
  * #
  * # Functions
  * # - bootstrap: Builds the NestJS application, applies structured logging and validation, and starts the HTTP server.
  */
 import 'reflect-metadata';
-import { LogLevel, ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import { promises as fs } from 'node:fs';
+import * as path from 'node:path';
+import { HttpStatus, LogLevel, ValidationPipe } from '@nestjs/common';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
 import { JsonLogger } from './common/logging/json-logger.service';
+import { HttpExceptionFilter, ProblemDetail } from './common/http';
+import { ResponseCustomerDto } from './customer/dtos/response-customer.dto';
+import {
+  CustomerAddressDto,
+  CustomerPhoneNumberDto,
+  CustomerPrivacySettingsDto,
+} from './customer/dtos/create-customer.dto';
 
 const LOG_LEVELS: LogLevel[] = ['error', 'warn', 'log', 'debug', 'verbose'];
 
@@ -39,8 +51,42 @@ async function bootstrap(): Promise<void> {
       whitelist: true,
       transform: true,
       forbidNonWhitelisted: true,
+      errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
     }),
   );
+
+  const httpAdapterHost = app.get(HttpAdapterHost);
+  app.useGlobalFilters(new HttpExceptionFilter(httpAdapterHost, jsonLogger));
+
+  const pkg = JSON.parse(
+    await fs.readFile(path.resolve(__dirname, '..', 'package.json'), 'utf8'),
+  ) as { version?: string };
+
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle('Customer Registration API')
+    .setDescription('HTTP API for managing the customer onboarding lifecycle.')
+    .setVersion(pkg.version ?? '1.0.0')
+    .addTag('Customer')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, swaggerConfig, {
+    extraModels: [
+      ProblemDetail,
+      ResponseCustomerDto,
+      CustomerAddressDto,
+      CustomerPhoneNumberDto,
+      CustomerPrivacySettingsDto,
+    ],
+    deepScanRoutes: true,
+  });
+
+  SwaggerModule.setup('api/docs', app, document, {
+    jsonDocumentUrl: '/api/openapi.json',
+    yamlDocumentUrl: '/api/openapi.yaml',
+  });
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>('app.port', 3000);

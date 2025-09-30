@@ -1,0 +1,50 @@
+{
+  "turnId": 4,
+  "timestampUtc": "2025-09-30T18:10:00Z",
+  "task": {
+    "name": "execute turn 4"
+  },
+  "changes": {
+    "added": [
+      "ai/agentic-pipeline/turns/4/adr.md",
+      "ai/agentic-pipeline/turns/4/changelog.md",
+      "ai/agentic-pipeline/turns/4/diff.patch",
+      "ai/agentic-pipeline/turns/4/manifest.json",
+      "ai/agentic-pipeline/turns/4/session_context_values.md",
+      "api/e2e/customers.http",
+      "api/openapi/openapi.json",
+      "api/openapi/openapi.yaml",
+      "api/src/common/http/http-exception.filter.ts",
+      "api/src/common/http/index.ts",
+      "api/src/common/http/problem-detail.ts",
+      "api/src/customer/controllers/customer.controller.spec.ts",
+      "api/src/customer/controllers/customer.controller.ts",
+      "api/src/customer/dtos/create-customer.dto.ts",
+      "api/src/customer/dtos/create-customer.dto.spec.ts",
+      "api/src/customer/dtos/response-customer.dto.ts",
+      "api/src/customer/dtos/update-customer.dto.ts",
+      "api/src/customer/services/customer.service.spec.ts",
+      "api/src/scripts/emit-openapi.ts",
+      "api/test/customers.e2e-spec.ts"
+    ],
+    "modified": [
+      "ai/agentic-pipeline/turns/index.csv",
+      "api/package-lock.json",
+      "api/package.json",
+      "api/src/customer/customer.module.ts",
+      "api/src/main.ts",
+      "api/test/health.e2e-spec.ts",
+      "api/test/logging.e2e-spec.ts"
+    ]
+  },
+  "tests": [
+    {
+      "command": "npm run test -- --runInBand",
+      "status": "passed"
+    },
+    {
+      "command": "npm run test:e2e",
+      "status": "passed"
+    }
+  ]
+}

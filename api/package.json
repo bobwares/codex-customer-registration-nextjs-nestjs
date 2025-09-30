@@ -18,6 +18,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
+    "openapi:emit": "ts-node -r tsconfig-paths/register src/scripts/emit-openapi.ts",
     "db:validate": "dotenv -e ../ai/context/.env -e .env -- ts-node src/database/validate-connection.ts",
     "typeorm:migration:create": "dotenv -e ../ai/context/.env -e .env -- typeorm migration:create src/migrations/Manual",
     "migration:run": "npx ts-node -P ./tsconfig.json -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d ./src/database/data-source.ts",
@@ -54,6 +55,7 @@
     "@types/jest": "^29.5.14",
     "@types/node": "^22.15.30",
     "@types/supertest": "^6.0.3",
+    "pg-mem": "^3.0.5",
     "@typescript-eslint/eslint-plugin": "^8.33.1",
     "@typescript-eslint/parser": "^8.33.1",
     "dotenv-cli": "^7.3.0",
@@ -66,6 +68,7 @@
     "ts-jest": "^29.3.4",
     "ts-loader": "^9.5.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "yaml": "^2.7.0"
   }
 }
