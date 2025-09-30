@@ -1,0 +1,616 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "HealthController_health",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Health"
+        ]
+      }
+    },
+    "/health/live": {
+      "get": {
+        "operationId": "HealthController_liveness",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Health"
+        ]
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "operationId": "HealthController_readiness",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Health"
+        ]
+      }
+    },
+    "/customers": {
+      "post": {
+        "operationId": "CustomerController_createCustomer",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Customer created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failure for the customer payload.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create a new customer profile.",
+        "tags": [
+          "Customers"
+        ]
+      },
+      "get": {
+        "operationId": "CustomerController_listCustomers",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Collection of customers returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CustomerResponseDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Retrieve the full list of customers.",
+        "tags": [
+          "Customers"
+        ]
+      }
+    },
+    "/customers/{id}": {
+      "get": {
+        "operationId": "CustomerController_getCustomer",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Customer identifier.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Customer located.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Customer not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Fetch a customer by identifier.",
+        "tags": [
+          "Customers"
+        ]
+      },
+      "put": {
+        "operationId": "CustomerController_updateCustomer",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Customer identifier.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCustomerDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Customer updated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed for the update payload.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Customer not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update an existing customer profile.",
+        "tags": [
+          "Customers"
+        ]
+      },
+      "delete": {
+        "operationId": "CustomerController_deleteCustomer",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Customer identifier.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Customer deleted successfully."
+          },
+          "404": {
+            "description": "Customer not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete an existing customer profile.",
+        "tags": [
+          "Customers"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "backend API",
+    "description": "",
+    "version": "0.0.1",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "Customers",
+      "description": ""
+    }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "number",
+            "description": "HTTP status code associated with the error response.",
+            "example": 400
+          },
+          "message": {
+            "description": "Human readable error summary or validation messages.",
+            "example": "Validation failed for the request payload.",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "error": {
+            "type": "string",
+            "description": "Short error classification string supplied by the server.",
+            "example": "Bad Request"
+          },
+          "path": {
+            "type": "string",
+            "description": "Request path that triggered the error.",
+            "example": "/customers/123"
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "ISO 8601 timestamp indicating when the error occurred.",
+            "example": "2025-09-30T18:00:00.000Z"
+          }
+        },
+        "required": [
+          "statusCode",
+          "message",
+          "error",
+          "path",
+          "timestamp"
+        ]
+      },
+      "CustomerPhoneNumberDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Type of phone number for the customer contact method.",
+            "example": "mobile",
+            "enum": [
+              "mobile",
+              "home",
+              "work",
+              "other"
+            ]
+          },
+          "number": {
+            "type": "string",
+            "description": "Phone number formatted using the E.164 international format.",
+            "example": "+15551234567",
+            "pattern": "^\\+?[1-9]\\d{1,14}$"
+          }
+        },
+        "required": [
+          "type",
+          "number"
+        ]
+      },
+      "CustomerAddressDto": {
+        "type": "object",
+        "properties": {
+          "line1": {
+            "type": "string",
+            "description": "Primary street address, company name, or P.O. box information.",
+            "example": "123 Market Street",
+            "minLength": 1
+          },
+          "line2": {
+            "type": "object",
+            "description": "Secondary address information such as apartment, suite, or unit.",
+            "example": "Suite 400"
+          },
+          "city": {
+            "type": "string",
+            "description": "City or locality component of the address.",
+            "example": "San Francisco",
+            "minLength": 1
+          },
+          "state": {
+            "type": "string",
+            "description": "State, province, or region of the address.",
+            "example": "CA",
+            "minLength": 1
+          },
+          "postalCode": {
+            "type": "string",
+            "description": "Postal or ZIP code associated with the address.",
+            "example": "94105"
+          },
+          "country": {
+            "type": "string",
+            "description": "ISO 3166-1 alpha-2 country code representing the country.",
+            "example": "US",
+            "minLength": 2,
+            "maxLength": 2
+          }
+        },
+        "required": [
+          "line1",
+          "city",
+          "state",
+          "postalCode",
+          "country"
+        ]
+      },
+      "CustomerPrivacySettingsDto": {
+        "type": "object",
+        "properties": {
+          "marketingEmailsEnabled": {
+            "type": "boolean",
+            "description": "Indicates whether marketing email communications are enabled for the customer.",
+            "example": true
+          },
+          "twoFactorEnabled": {
+            "type": "boolean",
+            "description": "Identifies whether multi-factor authentication is required for the customer account.",
+            "example": false
+          }
+        },
+        "required": [
+          "marketingEmailsEnabled",
+          "twoFactorEnabled"
+        ]
+      },
+      "CreateCustomerDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the customer profile.",
+            "example": "1b3e4567-e89b-12d3-a456-426614174000",
+            "format": "uuid"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Customer given name.",
+            "example": "Jane",
+            "minLength": 1
+          },
+          "middleName": {
+            "type": "object",
+            "description": "Customer middle name or initial when available.",
+            "example": "Anne"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Customer family name.",
+            "example": "Doe",
+            "minLength": 1
+          },
+          "emails": {
+            "description": "Collection of unique customer email addresses.",
+            "example": [
+              "jane.doe@example.com"
+            ],
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "phoneNumbers": {
+            "description": "Set of phone numbers registered for the customer profile.",
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerPhoneNumberDto"
+            }
+          },
+          "address": {
+            "description": "Postal address associated with the customer.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CustomerAddressDto"
+              }
+            ]
+          },
+          "privacySettings": {
+            "description": "Customer privacy preferences governing communications and security.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CustomerPrivacySettingsDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "firstName",
+          "lastName",
+          "emails",
+          "privacySettings"
+        ]
+      },
+      "CustomerResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the customer profile.",
+            "example": "1b3e4567-e89b-12d3-a456-426614174000",
+            "format": "uuid"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Customer given name.",
+            "example": "Jane"
+          },
+          "middleName": {
+            "type": "object",
+            "description": "Customer middle name or initial when available.",
+            "example": "Anne",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Customer family name.",
+            "example": "Doe"
+          },
+          "emails": {
+            "description": "Email addresses registered for the customer.",
+            "example": [
+              "jane.doe@example.com"
+            ],
+            "type": "array",
+            "items": {
+              "type": "array"
+            }
+          },
+          "phoneNumbers": {
+            "description": "Collection of phone numbers registered for the customer.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerPhoneNumberDto"
+            }
+          },
+          "address": {
+            "description": "Postal address associated with the customer profile.",
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CustomerAddressDto"
+              }
+            ]
+          },
+          "privacySettings": {
+            "description": "Privacy preferences for marketing communications and security.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CustomerPrivacySettingsDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "firstName",
+          "lastName",
+          "emails",
+          "privacySettings"
+        ]
+      },
+      "UpdateCustomerPrivacySettingsDto": {
+        "type": "object",
+        "properties": {
+          "marketingEmailsEnabled": {
+            "type": "boolean",
+            "description": "Indicates whether marketing email communications are enabled for the customer.",
+            "example": true
+          },
+          "twoFactorEnabled": {
+            "type": "boolean",
+            "description": "Identifies whether multi-factor authentication is required for the customer account.",
+            "example": false
+          }
+        }
+      },
+      "UpdateCustomerDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "Customer given name.",
+            "example": "Jane",
+            "minLength": 1
+          },
+          "middleName": {
+            "type": "object",
+            "description": "Customer middle name or initial when available.",
+            "example": "Anne"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Customer family name.",
+            "example": "Doe",
+            "minLength": 1
+          },
+          "emails": {
+            "description": "Collection of unique customer email addresses.",
+            "example": [
+              "jane.doe@example.com"
+            ],
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "address": {
+            "description": "Updated postal address for the customer or null to remove it.",
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CustomerAddressDto"
+              }
+            ]
+          },
+          "phoneNumbers": {
+            "description": "Replacement set of phone numbers for the customer.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerPhoneNumberDto"
+            }
+          },
+          "privacySettings": {
+            "description": "Partial update to the customer privacy preferences.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UpdateCustomerPrivacySettingsDto"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
