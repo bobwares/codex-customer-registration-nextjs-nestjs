@@ -2,9 +2,10 @@
  * # App: Customer Registration API
  * # Package: api/src/config
  * # File: validation.ts
- * # Version: 0.1.0
+ * # Version: 0.2.0
+ * # Turns: 1,3
  * # Author: Codex Agent
- * # Date: 2025-09-30T16:46:37+00:00
+ * # Date: 2025-09-30T17:20:00Z
  * # Description: Joi schema enforcing required environment variables and default values for configuration settings.
  * #
  * # Constants
@@ -20,7 +21,7 @@ export const validationSchema = Joi.object({
   PORT: Joi.number().integer().min(1).max(65535).default(3000),
   DATABASE_HOST: Joi.string().hostname().required(),
   DATABASE_PORT: Joi.number().integer().min(1).max(65535).default(5432),
-  DATABASE_USER: Joi.string().required(),
+  DATABASE_USERNAME: Joi.string().required(),
   DATABASE_PASSWORD: Joi.string().allow('').required(),
   DATABASE_NAME: Joi.string().required(),
   DATABASE_SCHEMA: Joi.string().default('public'),
