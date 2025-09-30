@@ -1,0 +1,40 @@
+{
+  "turnId": 3,
+  "timestampUtc": "2025-09-30T17:40:00Z",
+  "task": {
+    "name": "execute turn 3"
+  },
+  "changes": {
+    "added": [
+      "ai/agentic-pipeline/turns/3/adr.md",
+      "ai/agentic-pipeline/turns/3/changelog.md",
+      "ai/agentic-pipeline/turns/3/diff.patch",
+      "ai/agentic-pipeline/turns/3/manifest.json",
+      "ai/agentic-pipeline/turns/3/session_context_values.md",
+      "api/src/customer/customer.module.ts",
+      "api/src/customer/database/customer-database.module.ts",
+      "api/src/customer/entities/customer-email.entity.ts",
+      "api/src/customer/entities/customer-phone-number.entity.ts",
+      "api/src/customer/entities/customer.entity.ts",
+      "api/src/customer/entities/index.ts",
+      "api/src/customer/entities/postal-address.entity.ts",
+      "api/src/customer/entities/privacy-settings.entity.ts",
+      "api/src/customer/services/customer.service.ts",
+      "api/src/database/data-source.ts",
+      "api/src/database/validate-connection.ts",
+      "api/src/migrations/1727713200000-CreateCustomerDomainTables.ts"
+    ],
+    "modified": [
+      "ai/agentic-pipeline/turns/index.csv",
+      "ai/context/.env",
+      "api/.gitignore",
+      "api/package-lock.json",
+      "api/package.json",
+      "api/src/README-config.md",
+      "api/src/app.module.ts",
+      "api/src/config/configuration.ts",
+      "api/src/config/validation.ts"
+    ]
+  },
+  "tests": []
+}
