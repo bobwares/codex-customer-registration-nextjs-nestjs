@@ -1,0 +1,21 @@
+# App: Customer Registration
+# Package: api/e2e
+# File: health.http
+# Version: 0.1.0
+# Turns: 1
+# Author: gpt-5-codex
+# Date: 2025-10-27T06:28:15Z
+# Exports: REST Client requests
+# Description: REST Client requests validating health, liveness, and readiness endpoints.
+
+### Health metadata endpoint
+GET http://localhost:3000/health
+Accept: application/json
+
+### Liveness probe
+GET http://localhost:3000/health/live
+Accept: application/json
+
+### Readiness probe
+GET http://localhost:3000/health/ready
+Accept: application/json
